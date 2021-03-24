@@ -1,0 +1,1 @@
+let castling = { w: { k: true, q: true }, b: { k: true, q: true } };
