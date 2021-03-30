@@ -4,13 +4,16 @@
   "description": "Chess engine",
   "main": "index.js",
   "dependencies": {
-    "browserify": "^17.0.0"
+    
   },
-  "devDependencies": {},
+  "devDependencies": {
+  	"browserify": "^17.0.0"
+  },
   "scripts": {},
   "keywords": [
-    "chess"
+    "chess",
+    "chess-engine"
   ],
-  "author": "",
+  "author": "tenmore",
   "license": "ISC"
 }

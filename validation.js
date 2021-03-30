@@ -113,6 +113,16 @@ function pieceInCell(cell){
 	return getPieceInCell(cell) !== '-';
 }
 
+function addPiece(piece,cell) {
+	const col = (parseInt(cell[0], 36) - 9);
+  const row = 8 - (cell[1]);
+  globals.boardArray[row][col - 1] = piece;
+}
+
+function movePiece(startCell,endCell){
+	let originalPiece = getPieceInCell(startCell);
+
+}
 module.exports = {
 	isValid,
 	validateMove,
