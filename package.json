@@ -1,0 +1,16 @@
+{
+  "name": "CheckApe",
+  "version": "0.0.0",
+  "description": "Chess engine",
+  "main": "index.js",
+  "dependencies": {
+    "browserify": "^17.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "keywords": [
+    "chess"
+  ],
+  "author": "",
+  "license": "ISC"
+}

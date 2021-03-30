@@ -1,13 +1,11 @@
-function createBoardArray(fenString) {
-	return fenString.split('')[0].split('/');
-}
+const { globals } = require('./board');
 
-function evaluation(boardArray) {
+function evaluation() {
 	let whiteEval = 0;
 	let blackEval = 0;
 
 	//add material difference to colour
-	let material = materialDifference(boardArray);
+	let material = materialDifference(globals.boardArray);
 	if (material > 0)
 		whiteEval += material;
 	else
@@ -16,10 +14,10 @@ function evaluation(boardArray) {
 	return whiteEval - blackEval;
 }
 
-function materialDifference(boardArray) {
+function materialDifference() {
 	let points = { w: 0, b: 0 };
 
-	for (let i in boardArray) {
+	for (let i in globals.boardArray) {
 		for (let j = 0; j < i.length; i++) {
 			const colour = i[j] === i[j].toUpperCase() ? w : b;
 			let c = i[j];
@@ -32,5 +30,11 @@ function materialDifference(boardArray) {
 			}
 		}
 	}
+
 	return points.w - points.b;
+}
+
+module.exports = {
+	evaluation,
+	materialDifference,
 }

@@ -1,1 +1,4 @@
-let castling = { w: { k: true, q: true }, b: { k: true, q: true } };
+const { createBoardArray, invertColour, globals } = require('./board');
+const { evaluation, materialDifference } = require('./evaluation');
+const { isValid, validateMove, getPieceInCell, getPieceColour, pieceInCell, pieceInWay } = require('./validation');
+const test = require('./test');
