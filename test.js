@@ -1,10 +1,14 @@
-const { createBoardArray, invertColour, globals } = require('./board');
-const { evaluation, materialDifference } = require('./evaluation');
-const { isValid, getPieceInCell, validateMove } = require('./validation');
+const board = require('./board');
+const globals = board.globals;
+const evaluation = require('./evaluation');
+const validation = require('./validation');
 
-module.exports = function test() {
-	createBoardArray('rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1');
-
+function test() {
+	board.initialise();
 	console.log(globals.boardArray);
-	console.log(isValid('D1', 'E2'));
+	validation.makeMove('A2', 'A4');
+	console.log(board.createFenFromBoardArray());
+	console.log(globals.boardArray);
 }
+
+module.exports = test;

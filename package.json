@@ -1,19 +1,20 @@
 {
-  "name": "CheckApe",
-  "version": "0.0.0",
-  "description": "Chess engine",
-  "main": "index.js",
-  "dependencies": {
-    
-  },
-  "devDependencies": {
-  	"browserify": "^17.0.0"
-  },
-  "scripts": {},
-  "keywords": [
-    "chess",
-    "chess-engine"
-  ],
-  "author": "tenmore",
-  "license": "ISC"
+	"name": "CheckApe",
+	"version": "1.0.0-alpha",
+	"description": "Chess engine",
+	"main": "index.js",
+	"dependencies": {},
+	"devDependencies": {
+		"browserify": "^17.0.0"
+	},
+	"engines": {
+		"node": "^12.22.1"
+	},
+	"scripts": {},
+	"keywords": [
+		"chess",
+		"chess-engine"
+	],
+	"author": "tenmore",
+	"license": "ISC"
 }
