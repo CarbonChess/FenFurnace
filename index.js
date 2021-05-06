@@ -1,7 +1,14 @@
-const board = require('./board');
-const globals = board.globals;
-const evaluation = require('./evaluation');
-const validation = require('./validation');
-const test = require('./test');
+Object.assign(global, {
+	castling: { w: { k: true, q: true }, b: { k: true, q: true } },
+	currentFen: null,
+	boardArray: [],
+	enpassantSquare: null,
+	moveslist: [],
+	currentTurn: null,
+	halfMoveCount: 0,
+	moveNumber: 0,
+});
+
+import test from './test.js';
 
 test();

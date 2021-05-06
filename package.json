@@ -1,20 +1,26 @@
 {
 	"name": "CheckApe",
 	"version": "1.0.0-alpha",
-	"description": "Chess engine",
+	"description": "A chess engine designed to work entirely from a FEN position.",
 	"main": "index.js",
+	"type": "module",
+	"engines": {
+		"node": ">=13"
+	},
+	"scripts": {
+		"compile": "npx browserify -e index.js -o bin/browser-output.js"
+	},
 	"dependencies": {},
 	"devDependencies": {
 		"browserify": "^17.0.0"
 	},
-	"engines": {
-		"node": "^12.22.1"
-	},
-	"scripts": {},
 	"keywords": [
 		"chess",
 		"chess-engine"
 	],
-	"author": "tenmore",
+	"homepage": "https://carbonchess.com",
+	"bugs": "https://github.com/CarbonChess/CheckApe/issues",
+	"repository": "git+https://github.com/CarbonChess/CheckApe.git",
+	"author": "CarbonChess",
 	"license": "ISC"
 }

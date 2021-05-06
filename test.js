@@ -1,14 +1,11 @@
-const board = require('./board');
-const globals = board.globals;
-const evaluation = require('./evaluation');
-const validation = require('./validation');
+import initialise from './src/helpers/default-fen.js';
+import * as validation from './src/validation.js';
 
-function test() {
-	board.initialise();
-	console.log(globals.boardArray);
-	validation.makeMove('A2', 'A4');
-	console.log(board.createFenFromBoardArray());
-	console.log(globals.boardArray);
+export default function test() {
+	initialise();
+	validation.makeMove('F2', 'F3');
+	validation.makeMove('E7', 'E5');
+	validation.makeMove('E2', 'E4');
+	console.log(global.boardArray);
+	console.log(validation.getAllMoves('D8'));
 }
-
-module.exports = test;
