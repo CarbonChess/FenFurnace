@@ -1,3 +1,4 @@
+if (typeof global === 'undefined') global = {};
 Object.assign(global, {
 	castling: { w: { k: true, q: true }, b: { k: true, q: true } },
 	currentFen: null,
@@ -9,6 +10,8 @@ Object.assign(global, {
 	moveNumber: 0,
 });
 
-import test from './test.js';
+import {initialise as setupBoard} from './src/helpers.js';
+import createBoard from './src/board/create-board.js';
+import * as validation from './src/validation.js';
 
-test();
+export default {setupBoard, createBoard, validation};

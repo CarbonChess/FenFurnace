@@ -1,10 +1,10 @@
-import createBoardArray from './board/create-board.js';
 import createFenFromBoardArray from './board/create-fen.js';
-import invertColour from './helpers/invert-colour.js';
-import indexToLetter from './helpers/index-letter.js';
+import {invertColour} from './helpers.js';
+import isCheck from './validation/is-check.js';
 import * as pieces from './pieces.js';
 
 export function validateMove(startCell, endCell) {
+	if(startCell === endCell) return false;
 	return isValid(startCell, endCell) && !pieceInWay(startCell, endCell);
 }
 
@@ -24,18 +24,16 @@ export function isValid(startCell, endCell) {
 			return deltaNumber + deltaLetter === 3 && deltaLetter !== 0 && deltaNumber !== 0;
 		case 'k':
 			const singleMove = deltaLetter <= 1 && deltaNumber <= 1;
-			const castleMove = deltaLetter <= 2 && deltaNumber === 0 && (castling[colour[0]].k || castling[colour[0]].q);
-			return (singleMove || castleMove);
+			return (singleMove);
 		case 'b':
 			return deltaLetter === deltaNumber;
 		case 'q':
 			return deltaLetter === 0 || deltaNumber === 0 || deltaLetter === deltaNumber;
 		case 'p':
-			const takingPiece = deltaLetter === 1 && deltaNumber === 1 && pieces.pieceInCell(endCell) && pieces.getPieceColour(endCell) === invertColour(colour);
+			const takingPiece = deltaLetter === 1 && deltaNumber === 1 && pieces.inCell(endCell) && pieces.getColour(endCell) === invertColour(colour);
 			const pawnMove = deltaNumber === 1 || (deltaNumber === 2 && [2, 7].includes(startNumber));
 			const forward = colour === 'w' ? endNumber > startNumber : endNumber < startNumber;
-			const enpassantTaken = endCell === global.enpassantSquare && deltaLetter;
-			1 && deltaNumber;
+			const enpassantTaken = endCell === global.enpassantSquare && deltaLetter === 1 && deltaNumber === 1;
 			return (takingPiece || deltaLetter === 0 || enpassantTaken) && pawnMove && forward;
 		default:
 			return true;
@@ -46,7 +44,7 @@ export function pieceInWay(startCell, endCell) {
 	let invalidMove = false;
 	const direction = {};
 	let piece = pieces.getPieceInCell(startCell);
-	let colour = pieces.getPieceColour(startCell);
+	let colour = pieces.getColour(startCell);
 
 	let startNumber = parseInt(startCell[1]);
 	let endNumber = parseInt(endCell[1]);
@@ -68,15 +66,15 @@ export function pieceInWay(startCell, endCell) {
 		case 'p': {
 			if (deltaLetter === 0) {
 				if (colour === 'w') {
-					invalidMove = pieces.pieceInCell(startCell[0] + (startNumber + 1));
+					invalidMove = pieces.inCell(startCell[0] + (startNumber + 1));
 					if (deltaNumber === 2 && !invalidMove) {
-						invalidMove = pieces.pieceInCell(startCell[0] + (startNumber + 2));
+						invalidMove = pieces.inCell(startCell[0] + (startNumber + 2));
 					}
 				}
 				else {
-					invalidMove = pieces.pieceInCell(startCell[0] + (startNumber - 1));
+					invalidMove = pieces.inCell(startCell[0] + (startNumber - 1));
 					if (deltaNumber === 2 && !invalidMove) {
-						invalidMove = pieces.pieceInCell(startCell[0] + (startNumber - 2));
+						invalidMove = pieces.inCell(startCell[0] + (startNumber - 2));
 					}
 				}
 			}
@@ -89,7 +87,7 @@ export function pieceInWay(startCell, endCell) {
 			for (let i = 1; i <= Math.max(deltaLetter, deltaNumber); i++) {
 				const letter = String.fromCharCode(parseInt(startLetter.charCodeAt(0)) + direction.l * i);
 				const number = startNumber + direction.n * i;
-				const pieceColour = pieces.getPieceColour(letter + number);
+				const pieceColour = pieces.getColour(letter + number);
 
 				if (pieceColour === colour || hasCollided)
 					invalidMove = true;
@@ -99,46 +97,41 @@ export function pieceInWay(startCell, endCell) {
 			return invalidMove;
 		}
 		default: {
-			return pieces.getPieceColour(endCell) === colour;
+			return pieces.getColour(endCell) === colour;
 		}
 	}
 }
 
 export function makeMove(startCell, endCell, { isTest } = {}) {
 	const piece = pieces.getPieceInCell(startCell);
-	let pieceCaptured = pieces.pieceInCell(endCell);
-	let colour = pieces.getPieceColour(startCell);
-	console.debug('v.147', startCell, endCell, colour);
+	let pieceCaptured = pieces.inCell(endCell);
+	let colour = pieces.getColour(startCell);
 	let beforeState = global.boardArray;
 
 	//must be same colour as move
 	if (colour != global.currentTurn && !isTest) {
-		console.log('Failed to move', startCell, '->', endCell, 'v.120');
+		console.log('Failed to move', startCell, '->', endCell);
 		return false;
 	}
 
 	//validate castling
-	if (piece === 'k' && Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0)) === 2) {
+	if (piece.toLowerCase() === 'k' && Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0)) === 2) {
 		const isKingside = endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0;
 		const side = isKingside ? 'k' : 'q';
-		if (global.castling[colour].side) {
-			const file = isKingside ? 'A' : 'H';
+		if (global.castling[colour][side]) {
+			const file = isKingside ? 'H' : 'A';
 			const row = colour === 'w' ? '1' : '8';
 
 			//check if clear squares in between
-			let squares = [];
-			if (isKingside)
-				squares = ['F', 'G'];
-			else
-				squares = ['B', 'C', 'D'];
-
+			const squares = isKingside ? ['F', 'G'] : ['B', 'C', 'D'];
 			for (let i in squares) {
-				if (piece.pieceInCell(squares[i] + row))
+				if (pieces.inCell(squares[i] + row))
 					return false;
 			}
 
-			pieces.movePiece(startCell, endCell); //move king
-			pieces.movePiece(file + row, (isKingside ? 'F' : 'D') + row); //move rook
+			console.debug('v.134',pieces.inCell(startCell), pieces.inCell(endCell), pieces.getPieceInCell(startCell), pieces.getPieceInCell(endCell))
+			pieces.move(startCell, endCell); //move king
+			pieces.move(file + row, (isKingside ? 'F' : 'D') + row); //move rook
 
 			//make castling impossible for colour that castled
 			castling[colour] = { k: false, q: false };
@@ -148,16 +141,14 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 	//move if valid
 	if (validateMove(startCell, endCell)) {
-		console.debug('Moving', startCell, '->', endCell);
-		pieces.movePiece(startCell, endCell);
-		console.debug('v.158 piece moved')
+		pieces.move(startCell, endCell);
 	} else {
 		return false;
 	}
 
 	//enpassant check (take old enpassant pawn && update enpassant square)
 	if (piece === 'p' && endCell === global.enpassantSquare) {
-		pieces.deletePiece(global.enpassantSquare);
+		pieces.del(global.enpassantSquare);
 		global.halfMoveCount = 0;
 	}
 	const deltaLetter = Math.abs(+endCell[1] - +startCell[1]);
@@ -169,7 +160,6 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	}
 
 	if (isCheck(global.currentTurn)) {
-		console.debug('v.185', 'is check', global.boardArray, beforeState)
 		global.boardArray = beforeState;
 		return false;
 	}
@@ -185,102 +175,16 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 	//update halfMoveCount, currentTurn, moveNumber
 	if (colour === 'b') global.moveNumber++;
-	global.halfMoveCount += (piece.toLowerCase() === 'p' || pieceCaptured) ? 0 : 1;
+	
+	if(piece.toLowerCase() === 'p' || pieceCaptured)
+		global.halfMoveCount = 0;
+	else 
+		global.halfMoveCount++;
 
 	//change turn
 	global.currentTurn = global.currentTurn === 'w' ? 'b' : 'w';
+	//update fen && movelist
+	global.movelist.push(createFenFromBoardArray())
 
-	return createFenFromBoardArray();
-}
-
-export function isCheck(colour) {
-	// get the king cells
-	let kingCells = { w: '', b: '' };
-	for (let i = 1; i <= 8; i++) {
-		for (let j = 1; j <= 8; j++) {
-			const testCell = indexToLetter(j) + i;
-			const testPiece = pieces.getPieceInCell(testCell);
-			if (testPiece.toLowerCase() === 'k') {
-				let kingColour = pieces.getPieceColour(testCell);
-				kingCells[kingColour] = testCell;
-			}
-		}
-	}
-	
-	for (let i = 1; i <= 8; i++) {
-		for (let j = 1; j <= 8; j++) {
-			// if opposite colour, check its moves
-			const cell = indexToLetter(j) + i;
-			if (!pieces.pieceInCell(cell)) continue;
-
-			const pieceColour = pieces.getPieceColour(cell);
-			if (	
-				(
-					(pieces.isWhitePiece(pieceColour) && colour === 'b')
-					||
-					(pieces.isBlackPiece(pieceColour) && colour === 'w')
-				) &&
-				validateMove(cell, kingCells[colour])
-			) {
-				console.debug('v.225 Check found', cell)
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-//todo fix
-export function getAllMoves(cell) {
-	let possibleSquares = []
-	let colour = pieces.getPieceColour(cell);
-	let beforestate = createFenFromBoardArray();
-	for (let i = 1; i <= 8; i++) {
-		for (let j = 1; j <= 8; j++) {
-			const targetCell = indexToLetter(j) + i;
-
-			if (makeMove(cell, targetCell, { isTest: true })) {
-				possibleSquares.push(targetCell)
-			}
-			createBoardArray(beforestate)
-		}
-	}
-	return possibleSquares;
-}
-
-//todo
-export function gameEndingStatus(colour) {
-
-	if (global.halfMoveCount >= 100)
-		return 'stalemate'; // 50 move rule
-	if (createFen().split(' ')[0].replace(/\/|\d+/g, '').toLowerCase() === 'kk')
-		return 'stalemate'; // only 2 kings left
-
-	let currentlyCheck = isCheck(colour);
-	let noValidMoves = true;
-
-	outer:
-	for (let i = 1; i <= 8; i++) {
-		for (let j = 1; j <= 8; j++) {
-			const startCell = indexToLetter(j) + i;
-			if (getPieceClasses(startCell).includes(colour)) {
-				const possibleSquares = findAllMoves(startCell);
-				for (let k in possibleSquares) {
-					let pieceStore;
-					if (pieceInCell(possibleSquares[k])) {
-						pieceStore = getPieceClasses(possibleSquares[k]);
-					}
-					movePiece(startCell, possibleSquares[k]);
-					if (!isCheck(colour)) noValidMoves = false;
-					movePiece(possibleSquares[k], startCell);
-					if (pieceStore) addPiece(pieceStore[1], pieceStore[0], possibleSquares[k]);
-
-					if (!noValidMoves) break outer;
-				}
-			}
-		}
-	}
-
-	if (noValidMoves) return currentlyCheck ? 'checkmate' : 'stalemate';
-	else return false;
+	return global.movelist.slice(-1)[0];
 }

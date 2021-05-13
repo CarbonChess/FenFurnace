@@ -1,11 +1,17 @@
-import initialise from './src/helpers/default-fen.js';
+import './index.js';
+import {initialise} from './src/helpers.js';
+import getAllMoves from './src/validation/all-moves.js';
 import * as validation from './src/validation.js';
+import createBoard from './src/board/create-board.js';
+import gameEndingStatus from './src/validation/ending.js';
 
 export default function test() {
+	console.log('A8 H8\nA1 H1');
 	initialise();
-	validation.makeMove('F2', 'F3');
-	validation.makeMove('E7', 'E5');
-	validation.makeMove('E2', 'E4');
+	createBoard("rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/R3K2R w KQkq - 4 3");
+	validation.makeMove('E1','C1');
 	console.log(global.boardArray);
-	console.log(validation.getAllMoves('D8'));
+	console.log(global.movelist);
+	console.log(gameEndingStatus('b'));
 }
+test();

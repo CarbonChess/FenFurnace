@@ -17,7 +17,7 @@ export default function createBoardArray(fenString) {
 	}
 
 	global.enpassantsquare = fenString.split(' ')[3].toUpperCase();
-	global.halfmove = fenString.split(' ')[4];
+	global.halfMoveCount = fenString.split(' ')[4];
 	global.moveNumber = fenString.split(' ')[5];
 
 	global.boardArray = currentBoard.map(val => {
