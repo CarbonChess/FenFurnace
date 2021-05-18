@@ -1,5 +1,5 @@
 {
-	"name": "CheckApe",
+	"name": "@carbonchess/fenfurnace",
 	"version": "1.0.0-alpha",
 	"description": "A chess engine designed to work entirely from a FEN position.",
 	"main": "index.js",
@@ -18,11 +18,14 @@
 	},
 	"keywords": [
 		"chess",
-		"chess-engine"
+		"chess-engine",
+		"chess-rules",
+		"chess-validation",
+		"fen-reader"
 	],
 	"homepage": "https://carbonchess.com",
-	"bugs": "https://github.com/CarbonChess/CheckApe/issues",
-	"repository": "git+https://github.com/CarbonChess/CheckApe.git",
+	"bugs": "https://github.com/CarbonChess/FenFurnace/issues",
+	"repository": "git+https://github.com/CarbonChess/FenFurnace.git",
 	"author": "CarbonChess",
 	"license": "ISC"
 }
