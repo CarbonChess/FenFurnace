@@ -13,4 +13,5 @@ Object.assign(global, {
 import { setupBoard } from './src/helpers.js';
 import createBoard from './src/board/create-board.js';
 import * as validation from './src/validation.js';
-export default { setupBoard, createBoard, validation};
+import FindAllMoves from './src/validation/all-moves.js';
+export default { setupBoard, createBoard, validation, FindAllMoves};
