@@ -7,7 +7,6 @@ import * as validation from '../validation.js';
 
 export default function getAllMoves(cell) {
 	let possibleSquares = [];
-	let colour = pieces.getColour(cell);
 	let beforeState = createFenFromBoardArray();
 	for (let i = 1; i <= 8; i++) {
 		for (let j = 1; j <= 8; j++) {

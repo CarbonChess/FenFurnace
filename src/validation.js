@@ -146,6 +146,19 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 		return false;
 	}
 
+	//promotion
+	let isBackRank = endcell[1] === (invertColour(colour) === 'w' ? '8' : '1');
+	if(piece === 'p' && isBackRank){
+		if(!global.promotionPiece){
+			console.log('NO PROMOTION PIECE FOUND');
+			global.boardArray = beforeState;
+			return false;
+		} else {
+			pieces.del(endCell);
+			pieces.add(global.promotionPiece,endCell);
+			global.promotionPiece = null;
+		}
+	}
 	//enpassant check (take old enpassant pawn && update enpassant square)
 	if (piece === 'p' && endCell === global.enpassantSquare) {
 		pieces.del(global.enpassantSquare);
