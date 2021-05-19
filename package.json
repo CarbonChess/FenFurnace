@@ -1,7 +1,8 @@
 {
-	"name": "@carbonchess/fenfurnace",
+	"name": "fenfurnace",
 	"version": "1.0.0-alpha",
 	"description": "A chess engine designed to work entirely from a FEN position.",
+	"private": true,
 	"main": "index.js",
 	"type": "module",
 	"engines": {
