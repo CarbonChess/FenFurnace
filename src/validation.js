@@ -151,7 +151,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	let isBackRank = endCell[1] === (invertColour(colour) === 'w' ? '8' : '1');
 	if(piece === 'p' && isBackRank){
 		if(!global.promotionPiece){
-			console.log('NO PROMOTION PIECE FOUND');
+			console.error('NO PROMOTION PIECE FOUND');
 			global.boardArray = beforeState;
 			return false;
 		} else {
@@ -170,7 +170,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1);
 		global.enpassantSquare = endCell[0] + enpassantNumber;
 	} else {
-		global.enpassantSquare === '-';
+		global.enpassantSquare = '-';
 	}
 
 	if (isCheck(global.currentTurn)) {
