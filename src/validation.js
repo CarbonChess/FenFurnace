@@ -2,6 +2,7 @@ import createFenFromBoardArray from './board/create-fen.js';
 import {invertColour} from './helpers.js';
 import isCheck from './validation/is-check.js';
 import * as pieces from './pieces.js';
+import createBoardArray from './board/create-board.js';
 
 export function validateMove(startCell, endCell) {
 	if(startCell === endCell) return false;
@@ -197,7 +198,8 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	//change turn
 	global.currentTurn = global.currentTurn === 'w' ? 'b' : 'w';
 	//update fen and move list
-	global.moveList.push(createFenFromBoardArray())
+	let fen = createFenFromBoardArray();
+	if(!isTest) global.moveList.push(fen)
 
-	return global.moveList.slice(-1)[0];
+	return fen;
 }
