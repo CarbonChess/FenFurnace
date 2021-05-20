@@ -1,15 +1,15 @@
 {
 	"name": "fenfurnace",
 	"version": "1.0.0-alpha",
-	"description": "A chess engine designed to work entirely from a FEN position.",
 	"private": true,
+	"description": "A chess engine designed to work entirely from a FEN position.",
 	"main": "index.js",
 	"type": "module",
 	"engines": {
 		"node": ">=13"
 	},
 	"scripts": {
-		"compile": "npx webpack --entry ./index.js -o ./dist"
+		"compile": "npx webpack --entry ./browser.js -o ./dist"
 	},
 	"dependencies": {},
 	"devDependencies": {

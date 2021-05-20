@@ -1,4 +1,3 @@
-if (typeof global === 'undefined') global = {};
 Object.assign(global, {
 	castling: { w: { k: true, q: true }, b: { k: true, q: true } },
 	boardArray: [],
