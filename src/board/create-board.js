@@ -16,7 +16,7 @@ export default function createBoardArray(fenString) {
 		global.castling[colour][castleString[i].toLowerCase()] = true;
 	}
 
-	global.enpassantsquare = fenString.split(' ')[3].toUpperCase();
+	global.enpassantSquare = fenString.split(' ')[3].toUpperCase();
 	global.halfMoveCount = fenString.split(' ')[4];
 	global.moveNumber = fenString.split(' ')[5];
 

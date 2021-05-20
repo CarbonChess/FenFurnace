@@ -36,7 +36,7 @@ export default function createFenFromBoardArray() {
 	fenString += ' ' + castleString;
 
 	//enpassant
-	fenString += ' ' + global.enpassantsquare;
+	fenString += ' ' + global.enpassantSquare;
 	//halfmove clock
 	fenString += ' ' + global.halfMoveCount;
 	//move number

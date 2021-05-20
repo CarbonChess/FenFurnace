@@ -2,7 +2,7 @@ Object.assign(global, {
 	castling: { w: { k: true, q: true }, b: { k: true, q: true } },
 	boardArray: [],
 	enpassantSquare: null,
-	moveslist: [],
+	moveList: [],
 	currentTurn: null,
 	halfMoveCount: 0,
 	moveNumber: 0,

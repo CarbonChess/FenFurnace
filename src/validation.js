@@ -196,8 +196,8 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 	//change turn
 	global.currentTurn = global.currentTurn === 'w' ? 'b' : 'w';
-	//update fen && movelist
-	global.movelist.push(createFenFromBoardArray())
+	//update fen and move list
+	global.moveList.push(createFenFromBoardArray())
 
-	return global.movelist.slice(-1)[0];
+	return global.moveList.slice(-1)[0];
 }

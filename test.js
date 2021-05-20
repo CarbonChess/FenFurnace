@@ -14,4 +14,4 @@ export default function test() {
 	console.log(global.movelist);
 	console.log(gameEndingStatus('b'));
 }
-test();
+// test();

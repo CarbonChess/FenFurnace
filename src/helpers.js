@@ -2,8 +2,8 @@ import createBoardArray from './board/create-board.js';
 
 export function setupBoard() {
 	createBoardArray('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
-	global.movelist = [];
-	global.movelist.push('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+	global.moveList = [];
+	global.moveList.push('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
 }
 
 export function indexToLetter(n) {
