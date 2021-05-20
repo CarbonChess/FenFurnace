@@ -1,6 +1,6 @@
 export function getColour(cell) {
 	if (!inCell(cell)) {
-		console.warn('Cell', cell, 'is empty');
+		// console.warn('Cell', cell, 'is empty');
 		return;
 	}
 	return isWhite(getPieceInCell(cell)) ? 'w' : 'b';
@@ -19,17 +19,17 @@ export function inCell(cell) {
 
 export function move(startCell, endCell) {
 	if(!inCell(startCell)){
-		console.log('No Piece Found');
+		// console.log('No Piece Found');
 		return false;
 	}
-	console.log('Moving', startCell, '->', endCell);
+	// console.log('Moving', startCell, '->', endCell);
 	let originalPiece = getPieceInCell(startCell);
 	add(originalPiece, endCell);
 	del(startCell);
 }
 
 export function add(piece, cell) {
-	console.log('Adding piece', piece, 'to', cell);
+	// console.log('Adding piece', piece, 'to', cell);
 	const col = (parseInt(cell[0], 36) - 9);
 	const row = 8 - (cell[1]);
 	let str = global.boardArray[row];
@@ -37,7 +37,7 @@ export function add(piece, cell) {
 }
 
 export function del(cell) {
-	console.log('Deleting piece from', cell);
+	// console.log('Deleting piece from', cell);
 	const col = (parseInt(cell[0], 36) - 9);
 	const row = 8 - (cell[1]);
 	let str = global.boardArray[row];

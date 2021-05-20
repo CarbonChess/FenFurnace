@@ -147,7 +147,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	}
 
 	//promotion
-	let isBackRank = endcell[1] === (invertColour(colour) === 'w' ? '8' : '1');
+	let isBackRank = endCell[1] === (invertColour(colour) === 'w' ? '8' : '1');
 	if(piece === 'p' && isBackRank){
 		if(!global.promotionPiece){
 			console.log('NO PROMOTION PIECE FOUND');
