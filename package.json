@@ -1,7 +1,6 @@
 {
 	"name": "fenfurnace",
-	"version": "1.0.0-alpha",
-	"private": true,
+	"version": "0.1.0",
 	"description": "A chess engine designed to work entirely from a FEN position.",
 	"main": "index.js",
 	"type": "module",
