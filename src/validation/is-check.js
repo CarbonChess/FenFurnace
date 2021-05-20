@@ -24,9 +24,9 @@ export default function isCheck(colour) {
 
 			const pieceColour = pieces.getColour(cell);
 			if (
-				((pieces.isWhite(pieceColour) && colour === 'b')
+				((pieceColour === 'w' && colour === 'b')
 				||
-				(pieces.isBlack(pieceColour) && colour === 'w'))
+				(pieceColour === 'b' && colour === 'w'))
 				&&
 				validation.validateMove(cell, kingCells[colour])
 			) {

@@ -172,7 +172,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	} else {
 		global.enpassantSquare = '-';
 	}
-
+	//check checker
 	if (isCheck(global.currentTurn)) {
 		global.boardArray = beforeState;
 		return false;
