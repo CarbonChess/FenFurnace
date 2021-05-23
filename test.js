@@ -3,6 +3,7 @@ import { setupBoard } from './src/helpers.js';
 import * as validation from './src/validation.js';
 import createBoard from './src/board/create-board.js';
 import gameEndingStatus from './src/validation/ending.js';
+import isCheck from './src/validation/is-check.js';
 
 function test() {
 
