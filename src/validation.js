@@ -107,8 +107,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	const piece = pieces.getPieceInCell(startCell);
 	let pieceCaptured = pieces.inCell(endCell);
 	let colour = pieces.getColour(startCell);
-	let beforeState = global.boardArray;
-
+	let beforeState = [...global.boardArray];
 	//must be same colour as move
 	if (colour != global.currentTurn && !isTest) {
 		console.log('Failed to move', startCell, '->', endCell);
