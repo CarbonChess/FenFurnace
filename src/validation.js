@@ -130,7 +130,6 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 					return false;
 			}
 
-			console.debug('v.134',pieces.inCell(startCell), pieces.inCell(endCell), pieces.getPieceInCell(startCell), pieces.getPieceInCell(endCell))
 			pieces.move(startCell, endCell); //move king
 			pieces.move(file + row, (isKingside ? 'F' : 'D') + row); //move rook
 
@@ -189,10 +188,10 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 	//update halfMoveCount, currentTurn, moveNumber
 	if (colour === 'b') global.moveNumber++;
-	
+
 	if(piece.toLowerCase() === 'p' || pieceCaptured)
 		global.halfMoveCount = 0;
-	else 
+	else
 		global.halfMoveCount++;
 
 	//change turn

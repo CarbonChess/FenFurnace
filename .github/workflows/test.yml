@@ -1,0 +1,29 @@
+# Does a clean install of node dependencies, builds the source code and runs tests across different versions of Node.js
+# More info: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: CI Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # Supported Node.js release schedule: https://nodejs.org/en/about/releases/
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Node.js v${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm test

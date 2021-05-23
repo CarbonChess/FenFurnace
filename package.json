@@ -8,9 +8,9 @@
 		"node": ">=13"
 	},
 	"scripts": {
+		"test": "node test",
 		"compile": "npx webpack --entry ./browser.js -o ./dist"
 	},
-	"dependencies": {},
 	"devDependencies": {
 		"html-webpack-plugin": "^5.3.1",
 		"webpack": "^5.37.0",
