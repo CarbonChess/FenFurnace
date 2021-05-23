@@ -115,7 +115,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	}
 
 	//validate castling
-	if (piece.toLowerCase() === 'k' && Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0)) === 2) {
+	if (piece.toLowerCase() === 'k' && Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0)) === 2 && (endCell[1] === startCell[1])) {
 		const isKingside = endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0;
 		const side = isKingside ? 'k' : 'q';
 		if (global.castling[colour][side]) {
