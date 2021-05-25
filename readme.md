@@ -2,7 +2,11 @@
 
 A tool for validating chess piece movement generated from a FEN position.
 
-For implementation in [CarbonChess](https://github.com/CarbonChess).
+## Install
+
+FenFurnace is available [on npm](https://www.npmjs.org/package/fenfurnace):
+
+`npm install fenfurnace`
 
 ## Functions
 
@@ -26,3 +30,7 @@ For implementation in [CarbonChess](https://github.com/CarbonChess).
   - Checks whether a given colour (`'w'` or `'b'`) is currently in check.
 - `gameEndingStatus(colourId)`
   - Check the game has concluded and the result of the game (`'checkmate'`, `'stalemate'`, or `false`) for a given colour (`'w'` or `'b'`).
+
+## Build
+
+Build code for browser use using `npm run compile`.
