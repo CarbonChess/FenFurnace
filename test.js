@@ -1,6 +1,6 @@
 import './index.js'; // setup globals
 import * as validation from './src/validation.js';
-import setupBoard from './src/board/setup-board';
+import setupBoard from './src/board/setup-board.js';
 import createBoard from './src/board/create-board.js';
 import gameEndingStatus from './src/validation/ending.js';
 import isCheck from './src/validation/is-check.js';
