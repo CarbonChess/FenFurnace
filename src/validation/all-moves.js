@@ -1,5 +1,4 @@
-import * as pieces from '../pieces.js';
-import {indexToLetter} from '../helpers.js';
+import { indexToLetter } from '../helpers.js';
 import createFenFromBoardArray from '../board/create-fen.js';
 import createBoardArray from '../board/create-board.js';
 import * as validation from '../validation.js';

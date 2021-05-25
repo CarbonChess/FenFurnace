@@ -2,7 +2,6 @@ import createFenFromBoardArray from './board/create-fen.js';
 import {invertColour} from './helpers.js';
 import isCheck from './validation/is-check.js';
 import * as pieces from './pieces.js';
-import createBoardArray from './board/create-board.js';
 
 export function validateMove(startCell, endCell) {
 	if(startCell === endCell) return false;
