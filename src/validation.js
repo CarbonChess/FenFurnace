@@ -159,7 +159,9 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	}
 	//enpassant check (take old enpassant pawn && update enpassant square)
 	if (piece === 'p' && endCell === global.enpassantSquare) {
-		pieces.del(global.enpassantSquare);
+		
+		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1)
+		pieces.del(endCell[0] + enpassantNumber);
 		global.halfMoveCount = 0;
 	}
 	const deltaLetter = Math.abs(+endCell[1] - +startCell[1]);

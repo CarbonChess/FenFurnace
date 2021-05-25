@@ -2,9 +2,13 @@ import { indexToLetter } from '../helpers.js';
 import createFenFromBoardArray from '../board/create-fen.js';
 import createBoardArray from '../board/create-board.js';
 import * as validation from '../validation.js';
-
+import * as pieces from '../pieces.js';
 
 export default function getAllMoves(cell) {
+	if(!pieces.inCell(cell)){
+		//empty square
+		return [];
+	}
 	let possibleSquares = [];
 	let beforeState = createFenFromBoardArray();
 	for (let i = 1; i <= 8; i++) {
