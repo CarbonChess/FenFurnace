@@ -9,7 +9,7 @@ Object.assign(global, {
 	promotionPiece: null,
 });
 
-import setupBoard from './src/board/setup-board';
+import setupBoard from './src/board/setup-board.js';
 import createBoard from './src/board/create-board.js';
 import * as validation from './src/validation.js';
 import findAllMoves from './src/validation/all-moves.js';
