@@ -14,9 +14,8 @@ import createBoard from './src/board/create-board.js';
 import * as validation from './src/validation.js';
 import findAllMoves from './src/validation/all-moves.js';
 import isCheck from './src/validation/is-check.js';
-
 import gameEndingStatus from './src/validation/ending.js';
-import undo from './src/board/undo.js'
+import undoMove from './src/board/undo.js';
 
 export default {
 	setupBoard,
@@ -25,4 +24,5 @@ export default {
 	findAllMoves,
 	isCheck,
 	gameEndingStatus,
+	undoMove,
 }
