@@ -158,7 +158,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 		}
 	}
 	//enpassant check (take old enpassant pawn && update enpassant square)
-	if (piece === 'p' && endCell === global.enpassantSquare) {
+	if (piece.toLowerCase() === 'p' && endCell === global.enpassantSquare) {
 		
 		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1)
 		pieces.del(endCell[0] + enpassantNumber);
@@ -196,6 +196,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 	//change turn
 	global.currentTurn = global.currentTurn === 'w' ? 'b' : 'w';
+
 	//update fen and move list
 	let fen = createFenFromBoardArray();
 	if(!isTest) global.moveList.push(fen)
