@@ -19,7 +19,7 @@ For implementation in [CarbonChess](https://github.com/CarbonChess).
 - `validation.makeMove(startCell, endCell)`
   - Attempt to move a piece; returns `false` if invalid.
 - `undoMove()`
-  - Undoes the last move.
+  - Undoes and returns the last move.
 - `findAllMoves(cell)`
   - Return an array of all valid moves from a given cell.
 - `isCheck(colourId)`
