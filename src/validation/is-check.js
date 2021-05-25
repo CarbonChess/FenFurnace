@@ -1,5 +1,5 @@
 import * as pieces from '../pieces.js';
-import {indexToLetter} from '../helpers.js';
+import { indexToLetter } from '../helpers.js';
 import * as validation from '../validation.js';
 
 export default function isCheck(colour) {
@@ -15,7 +15,7 @@ export default function isCheck(colour) {
 			}
 		}
 	}
-	
+
 	for (let i = 1; i <= 8; i++) {
 		for (let j = 1; j <= 8; j++) {
 			// if opposite colour, check its moves
@@ -23,15 +23,9 @@ export default function isCheck(colour) {
 			if (!pieces.inCell(cell)) continue;
 
 			const pieceColour = pieces.getColour(cell);
-			if (
-				((pieceColour === 'w' && colour === 'b')
-				||
-				(pieceColour === 'b' && colour === 'w'))
-				&&
-				validation.validateMove(cell, kingCells[colour])
-			) {
+			const diffColour = (pieceColour === 'w' && colour === 'b') || (pieceColour === 'b' && colour === 'w');
+			if (diffColour && validation.validateMove(cell, kingCells[colour]))
 				return true;
-			}
 		}
 	}
 	return false;

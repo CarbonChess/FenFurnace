@@ -2,7 +2,6 @@ import createFenFromBoardArray from './board/create-fen.js';
 import {invertColour} from './helpers.js';
 import isCheck from './validation/is-check.js';
 import * as pieces from './pieces.js';
-import createBoardArray from './board/create-board.js';
 
 export function validateMove(startCell, endCell) {
 	if(startCell === endCell) return false;
@@ -107,8 +106,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	const piece = pieces.getPieceInCell(startCell);
 	let pieceCaptured = pieces.inCell(endCell);
 	let colour = pieces.getColour(startCell);
-	let beforeState = global.boardArray;
-
+	let beforeState = [...global.boardArray];
 	//must be same colour as move
 	if (colour != global.currentTurn && !isTest) {
 		console.log('Failed to move', startCell, '->', endCell);
@@ -116,7 +114,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	}
 
 	//validate castling
-	if (piece.toLowerCase() === 'k' && Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0)) === 2) {
+	if (piece.toLowerCase() === 'k' && Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0)) === 2 && (endCell[1] === startCell[1])) {
 		const isKingside = endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0;
 		const side = isKingside ? 'k' : 'q';
 		if (global.castling[colour][side]) {
@@ -160,8 +158,10 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 		}
 	}
 	//enpassant check (take old enpassant pawn && update enpassant square)
-	if (piece === 'p' && endCell === global.enpassantSquare) {
-		pieces.del(global.enpassantSquare);
+	if (piece.toLowerCase() === 'p' && endCell === global.enpassantSquare) {
+		
+		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1)
+		pieces.del(endCell[0] + enpassantNumber);
 		global.halfMoveCount = 0;
 	}
 	const deltaLetter = Math.abs(+endCell[1] - +startCell[1]);
@@ -196,6 +196,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 	//change turn
 	global.currentTurn = global.currentTurn === 'w' ? 'b' : 'w';
+
 	//update fen and move list
 	let fen = createFenFromBoardArray();
 	if(!isTest) global.moveList.push(fen)
