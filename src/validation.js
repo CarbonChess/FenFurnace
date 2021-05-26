@@ -146,13 +146,14 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 	//promotion
 	let isBackRank = endCell[1] === (invertColour(colour) === 'w' ? '8' : '1');
-	if(piece === 'p' && isBackRank){
+	if(piece.toLowerCase() === 'p' && isBackRank){
 		if(!global.promotionPiece){
 			console.error('NO PROMOTION PIECE FOUND');
 			global.boardArray = beforeState;
 			return false;
 		} else {
 			pieces.del(endCell);
+			if (colour === 'w') global.promotionPiece = global.promotionPiece.toUpperCase();
 			pieces.add(global.promotionPiece,endCell);
 			global.promotionPiece = null;
 		}
@@ -163,6 +164,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1)
 		pieces.del(endCell[0] + enpassantNumber);
 		global.halfMoveCount = 0;
+		pieceCaptured = true;
 	}
 	const deltaLetter = Math.abs(+endCell[1] - +startCell[1]);
 	if (piece.toLowerCase() === 'p' && deltaLetter === 2) {
@@ -197,6 +199,9 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	//change turn
 	global.currentTurn = global.currentTurn === 'w' ? 'b' : 'w';
 
+
+	//add to log 
+	
 	//update fen and move list
 	let fen = createFenFromBoardArray();
 	if(!isTest) global.moveList.push(fen)
