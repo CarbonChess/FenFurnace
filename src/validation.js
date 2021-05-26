@@ -208,7 +208,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	if (events.castled) {
 		logText += endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0 ? 'O-O' : 'O-O-O';
 	} else {
-		if (piece.toLowerCase() === 'p') logText += startCell[1].toLowerCase();
+		if (piece.toLowerCase() === 'p' && events.pieceCaptured) logText += startCell[1].toLowerCase();
 		else logText += piece.toUpperCase();
 		if (events.pieceCaptured) logText += 'x';
 		logText += endCell;
@@ -218,7 +218,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 	//update fen and move list
 	let fen = createFenFromBoardArray();
-	if (!isTest) global.moveList.push(fen)
+	if (!isTest) global.moveList.push(fen);
 
 	return fen;
 }
