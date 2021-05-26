@@ -135,6 +135,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 			//make castling impossible for colour that castled
 			castling[colour] = { k: false, q: false };
+			events.castled = true;
 		}
 		else return false;
 	}
@@ -204,11 +205,16 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 	//add to log
 	let logText = '';
-
-	if (piece.toLowerCase() === 'p') logText += startCell[1].toLowerCase();
-	else logText += piece.toUpperCase();
-	if (events.pieceCaptured) logText += 'x';
-	logText += endCell;
+	if (events.castled) {
+		logText += endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0 ? 'O-O' : 'O-O-O';
+	} else {
+		if (piece.toLowerCase() === 'p') logText += startCell[1].toLowerCase();
+		else logText += piece.toUpperCase();
+		if (events.pieceCaptured) logText += 'x';
+		logText += endCell;
+		if(events.promoted) logText += '=' + pieces.getPieceInCell(endCell).toUpperCase();
+	}
+	global.logList.push(logText);
 
 	//update fen and move list
 	let fen = createFenFromBoardArray();

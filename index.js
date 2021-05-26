@@ -7,6 +7,7 @@ Object.assign(global, {
 	halfMoveCount: 0,
 	moveNumber: 0,
 	promotionPiece: null,
+	logList: [],
 });
 
 import setupBoard from './src/board/setup-board.js';
