@@ -1,3 +1,7 @@
+[![Latest version](https://img.shields.io/github/v/release/CarbonChess/FenFurnace?label=latest%20version&style=flat-square)](https://github.com/CarbonChess/FenFurnace/releases)
+[![Last updated](https://img.shields.io/github/release-date/CarbonChess/FenFurnace?label=updated&style=flat-square)](https://github.com/CarbonChess/FenFurnace/releases)
+[![npm downloads](https://img.shields.io/npm/dt/fenfurnace?logo=npm)](https://www.npmjs.com/package/fenfurnace)
+
 # FenFurnace
 
 A tool for validating chess piece movement generated from a FEN position.
