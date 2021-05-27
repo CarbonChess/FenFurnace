@@ -163,7 +163,6 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	}
 	//enpassant check (take old enpassant pawn && update enpassant square)
 	if (piece.toLowerCase() === 'p' && endCell === global.enpassantSquare) {
-
 		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1)
 		pieces.del(endCell[0] + enpassantNumber);
 		global.halfMoveCount = 0;
@@ -176,6 +175,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	} else {
 		global.enpassantSquare = '-';
 	}
+
 	//check checker
 	if (isCheck(global.currentTurn)) {
 		global.boardArray = beforeState;
@@ -202,7 +202,6 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	//change turn
 	global.currentTurn = global.currentTurn === 'w' ? 'b' : 'w';
 
-
 	//add to log
 	let logText = '';
 	if (events.castled) {
@@ -212,7 +211,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 		else logText += piece.toUpperCase();
 		if (events.pieceCaptured) logText += 'x';
 		logText += endCell;
-		if(events.promoted) logText += '=' + pieces.getPieceInCell(endCell).toUpperCase();
+		if (events.promoted) logText += '=' + pieces.getPieceInCell(endCell).toUpperCase();
 	}
 	global.logList.push(logText);
 
