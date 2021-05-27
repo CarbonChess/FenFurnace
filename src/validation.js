@@ -1,10 +1,10 @@
 import createFenFromBoardArray from './board/create-fen.js';
-import {invertColour} from './helpers.js';
+import { invertColour } from './helpers.js';
 import isCheck from './validation/is-check.js';
 import * as pieces from './pieces.js';
 
 export function validateMove(startCell, endCell) {
-	if(startCell === endCell) return false;
+	if (startCell === endCell) return false;
 	return isValid(startCell, endCell) && !pieceInWay(startCell, endCell);
 }
 
@@ -52,6 +52,7 @@ export function pieceInWay(startCell, endCell) {
 	let startLetter = startCell[0];
 	let endLetter = endCell[0];
 	let deltaLetter = Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0));
+
 
 	// determine direction
 	if (endLetter > startLetter) direction.l = 1;
@@ -104,9 +105,10 @@ export function pieceInWay(startCell, endCell) {
 
 export function makeMove(startCell, endCell, { isTest } = {}) {
 	const piece = pieces.getPieceInCell(startCell);
-	let pieceCaptured = pieces.inCell(endCell);
 	let colour = pieces.getColour(startCell);
 	let beforeState = [...global.boardArray];
+
+	let events = { pieceCaptured: pieces.inCell(endCell), promoted: false, castled: false }
 	//must be same colour as move
 	if (colour != global.currentTurn && !isTest) {
 		console.log('Failed to move', startCell, '->', endCell);
@@ -133,6 +135,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 			//make castling impossible for colour that castled
 			castling[colour] = { k: false, q: false };
+			events.castled = true;
 		}
 		else return false;
 	}
@@ -146,23 +149,24 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 	//promotion
 	let isBackRank = endCell[1] === (invertColour(colour) === 'w' ? '8' : '1');
-	if(piece === 'p' && isBackRank){
-		if(!global.promotionPiece){
+	if (piece.toLowerCase() === 'p' && isBackRank) {
+		if (!global.promotionPiece) {
 			console.error('NO PROMOTION PIECE FOUND');
 			global.boardArray = beforeState;
 			return false;
 		} else {
 			pieces.del(endCell);
-			pieces.add(global.promotionPiece,endCell);
+			if (colour === 'w') global.promotionPiece = global.promotionPiece.toUpperCase();
+			pieces.add(global.promotionPiece, endCell);
 			global.promotionPiece = null;
 		}
 	}
 	//enpassant check (take old enpassant pawn && update enpassant square)
 	if (piece.toLowerCase() === 'p' && endCell === global.enpassantSquare) {
-		
 		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1)
 		pieces.del(endCell[0] + enpassantNumber);
 		global.halfMoveCount = 0;
+		events.pieceCaptured = true;
 	}
 	const deltaLetter = Math.abs(+endCell[1] - +startCell[1]);
 	if (piece.toLowerCase() === 'p' && deltaLetter === 2) {
@@ -171,6 +175,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	} else {
 		global.enpassantSquare = '-';
 	}
+
 	//check checker
 	if (isCheck(global.currentTurn)) {
 		global.boardArray = beforeState;
@@ -189,7 +194,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	//update halfMoveCount, currentTurn, moveNumber
 	if (colour === 'b') global.moveNumber++;
 
-	if(piece.toLowerCase() === 'p' || pieceCaptured)
+	if (piece.toLowerCase() === 'p' || events.pieceCaptured)
 		global.halfMoveCount = 0;
 	else
 		global.halfMoveCount++;
@@ -197,9 +202,22 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	//change turn
 	global.currentTurn = global.currentTurn === 'w' ? 'b' : 'w';
 
+	//add to log
+	let logText = '';
+	if (events.castled) {
+		logText += endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0 ? 'O-O' : 'O-O-O';
+	} else {
+		if (piece.toLowerCase() === 'p' && events.pieceCaptured) logText += startCell[1].toLowerCase();
+		else logText += piece.toUpperCase();
+		if (events.pieceCaptured) logText += 'x';
+		logText += endCell;
+		if (events.promoted) logText += '=' + pieces.getPieceInCell(endCell).toUpperCase();
+	}
+	global.logList.push(logText);
+
 	//update fen and move list
 	let fen = createFenFromBoardArray();
-	if(!isTest) global.moveList.push(fen)
+	if (!isTest) global.moveList.push(fen);
 
 	return fen;
 }
