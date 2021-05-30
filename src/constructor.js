@@ -1,8 +1,9 @@
 import * as validation from 'validation.js';
 
-class CustomPiece{
+class CustomPiece {
 
-    function validateMove{
-        
+    constructor({template, validWhen}) {
+        this.template = template;
+        this.validWhen = validWhen;
     }
 }
