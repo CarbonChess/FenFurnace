@@ -6,4 +6,12 @@ class CustomPiece {
         this.template = template;
         this.validWhen = validWhen;
     }
+
+    validate(dx,dy) {
+        switch (this.template) {
+
+            default: this.validWhen(dx,dy); break;
+        }
+    }
+
 }
