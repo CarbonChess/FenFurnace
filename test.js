@@ -23,12 +23,13 @@ function test() {
 	console.assert(global.boardArray[1] === 'pppp-ppp', 'Pawn moved out of row 2');
 	console.assert(global.boardArray[2] === '-----n--', 'Knight in row 3');
 
-	// Castling
+	// Castling & log output
 	createBoard('rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/R3K2R w KQkq - 4 3');
 	console.assert(global.boardArray[7] === 'R---K--R', 'King has not casled');
 	validation.makeMove('E1', 'C1');
 	console.assert(global.boardArray[7] === '--KR---R', 'King has castled');
 	console.assert(!global.castling.w.k && global.castling.b.q, 'Castling invalid for white');
+	console.assert(global.logList.pop() === 'O-O-O', 'Correct log for castling');
 
 	// Putting in check
 	createBoard('rnbqkbnr/ppp1pppp/3p4/1B6/8/4P3/PPPP1PPP/RNBQK1NR b KQkq - 1 2');

@@ -3,7 +3,7 @@ import createBoardArray from './create-board.js';
 export default function undoMove() {
 	if (!global.moveList.length) return;
 	global.moveList.pop();
-	global.loglist.pop();
+	global.logList.pop();
 	let lastMove = global.moveList.slice(-1)[0];
 	createBoardArray(lastMove);
 	return lastMove;
