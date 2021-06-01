@@ -51,7 +51,7 @@ function test() {
 	// Check king moves
 	setupBoard();
 	createBoard("rnbqkbnr/ppp1p1pp/3p1p2/7Q/4P3/3P4/PPP2PPP/RNB1KBNR b KQkq - 1 3");
-	console.assert(findAllMoves('E8') = ['D7'],'Valid king move found');
+	console.assert(findAllMoves('E8').join('') === 'D7','Valid king move found');
 }
 
 test();
