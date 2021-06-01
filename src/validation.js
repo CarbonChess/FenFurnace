@@ -184,11 +184,11 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 
 	//if rook or king make castling invalid
 	if (piece === 'k') {
-		castling[colour] = { k: false, q: false };
+		global.castling[colour] = { k: false, q: false };
 	} else if (piece === 'r') {
 		const isKingside = startCell === 'H';
 		const side = isKingside ? 'k' : 'q';
-		castling[colour][side] = false;
+		global.castling[colour][side] = false;
 	}
 
 	//update halfMoveCount, currentTurn, moveNumber
@@ -213,7 +213,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 		logText += endCell;
 		if (events.promoted) logText += '=' + pieces.getPieceInCell(endCell).toUpperCase();
 	}
-	global.logList.push(logText);
+	if (!isTest) global.logList.push(logText);
 
 	//update fen and move list
 	let fen = createFenFromBoardArray();
