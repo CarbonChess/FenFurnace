@@ -5,7 +5,7 @@ import * as validation from '../validation.js';
 import * as pieces from '../pieces.js';
 
 export default function getAllMoves(cell) {
-	if(!pieces.inCell(cell)){
+	if (!pieces.inCell(cell)) {
 		//empty square
 		return [];
 	}
