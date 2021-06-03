@@ -207,7 +207,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	if (events.castled === true) {
 		logText += endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0 ? 'O-O' : 'O-O-O';
 	} else {
-		if (piece.toLowerCase() === 'p' && events.pieceCaptured) logText += startCell[1].toLowerCase();
+		if (piece.toLowerCase() === 'p' && events.pieceCaptured) logText += startCell[0].toLowerCase();
 		else if (piece.toLowerCase() !== 'p') logText += piece.toUpperCase();
 		if (events.pieceCaptured) logText += 'x';
 		logText += endCell;
