@@ -1,10 +1,9 @@
 {
 	"name": "fenfurnace",
-	"version": "0.2.5",
+	"version": "0.2.6",
 	"description": "A chess engine designed to work entirely from a FEN position.",
 	"keywords": [
 		"chess",
-		"chess-engine",
 		"chess-rules",
 		"chess-validation",
 		"fen-reader"
