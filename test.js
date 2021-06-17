@@ -50,8 +50,16 @@ function test() {
 
 	// Check king moves
 	setupBoard();
-	createBoard("rnbqkbnr/ppp1p1pp/3p1p2/7Q/4P3/3P4/PPP2PPP/RNB1KBNR b KQkq - 1 3");
-	console.assert(findAllMoves('E8').join('') === 'D7','Valid king move found');
+	createBoard('rnbqkbnr/ppp1p1pp/3p1p2/7Q/4P3/3P4/PPP2PPP/RNB1KBNR b KQkq - 1 3');
+	console.assert(findAllMoves('E8').join('') === 'D7', 'Valid king move found');
+
+	// Promoting
+	setupBoard();
+	createBoard('rnbqkbnr/pPppppp1/8/8/8/8/1PPPPPpP/RNBQKBNR w KQkq - 0 5');
+	global.promotionPiece = 'Q';
+	validation.makeMove('B7', 'A8');
+	console.assert(global.boardArray[0] === 'Qnbqkbnr', 'Pawn is promoted to queen');
+
 }
 
 test();
