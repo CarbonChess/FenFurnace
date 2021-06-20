@@ -116,7 +116,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	}
 
 	//validate castling
-	if (piece.toLowerCase() === 'k' && Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0)) === 2 && (endCell[1] === startCell[1])) {
+	if (piece.toLowerCase() === 'k' && Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0)) === 2 && (endCell[1] === startCell[1]) && !isCheck(colour)) {
 		const isKingside = endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0;
 		const side = isKingside ? 'k' : 'q';
 		if (global.castling[colour][side]) {
@@ -148,7 +148,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 	}
 
 	//promotion
-	let isBackRank = endCell[1] === (invertColour(colour) === 'w' ? '8' : '1');
+	let isBackRank = endCell[1] === (colour === 'w' ? '8' : '1');
 	if (piece.toLowerCase() === 'p' && isBackRank) {
 		if (!global.promotionPiece) {
 			console.error('NO PROMOTION PIECE FOUND');
@@ -156,7 +156,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 			return false;
 		} else {
 			pieces.del(endCell);
-			if (colour === 'w') global.promotionPiece = global.promotionPiece.toUpperCase();
+			global.promotionPiece = global.promotionPiece[colour === 'w' ? 'toUpperCase' : 'toLowerCase']();
 			pieces.add(global.promotionPiece, endCell);
 			global.promotionPiece = null;
 		}
