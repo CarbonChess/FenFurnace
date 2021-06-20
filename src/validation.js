@@ -156,7 +156,7 @@ export function makeMove(startCell, endCell, { isTest } = {}) {
 			return false;
 		} else {
 			pieces.del(endCell);
-			global.promotionPiece = global.promotionPiece[colour === 'w' ? toUpperCase : toLowerCase]();
+			global.promotionPiece = global.promotionPiece[colour === 'w' ? 'toUpperCase' : 'toLowerCase']();
 			pieces.add(global.promotionPiece, endCell);
 			global.promotionPiece = null;
 		}
