@@ -1,3 +1,4 @@
+import gameData from '../variables.js';
 import { invertColour } from '../helpers.js';
 import * as pieces from '../pieces.js';
 
@@ -29,7 +30,7 @@ export function isValid(startCell, endCell) {
 			const takingPiece = deltaLetter === 1 && deltaNumber === 1 && pieces.inCell(endCell) && pieces.getColour(endCell) === invertColour(colour);
 			const pawnMove = deltaNumber === 1 || (deltaNumber === 2 && [2, 7].includes(startNumber));
 			const forward = colour === 'w' ? endNumber > startNumber : endNumber < startNumber;
-			const enpassantTaken = endCell === global.enpassantSquare && deltaLetter === 1 && deltaNumber === 1;
+			const enpassantTaken = endCell === gameData.enpassantSquare && deltaLetter === 1 && deltaNumber === 1;
 			return (takingPiece || deltaLetter === 0 || enpassantTaken) && pawnMove && forward;
 		default:
 			return true;

@@ -1,3 +1,4 @@
+import gameData from '../variables.js';
 import createFenFromBoardArray from './board/create-fen.js';
 import isCheck from './validation/is-check.js';
 import * as pieces from './pieces.js';
@@ -7,11 +8,11 @@ export default function makeMove(startCell, endCell, { isTest } = {}) {
 
 	const piece = pieces.getPieceInCell(startCell);
 	const colour = pieces.getColour(startCell);
-	const beforeState = [...global.boardArray];
+	const beforeState = [...gameData.boardArray];
 	const events = { pieceCaptured: pieces.inCell(endCell), promoted: false, castled: false };
 
 	//must be same colour as move
-	if (colour !== global.currentTurn && !isTest) {
+	if (colour !== gameData.currentTurn && !isTest) {
 		console.log('Failed to move', startCell, '->', endCell);
 		return false;
 	}
@@ -20,7 +21,7 @@ export default function makeMove(startCell, endCell, { isTest } = {}) {
 	if (piece.toLowerCase() === 'k' && Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0)) === 2 && (endCell[1] === startCell[1]) && !isCheck(colour)) {
 		const isKingside = endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0;
 		const side = isKingside ? 'k' : 'q';
-		if (global.castling[colour][side]) {
+		if (gameData.castling[colour][side]) {
 			const file = isKingside ? 'H' : 'A';
 			const row = colour === 'w' ? '1' : '8';
 
@@ -34,7 +35,7 @@ export default function makeMove(startCell, endCell, { isTest } = {}) {
 			pieces.move(file + row, (isKingside ? 'F' : 'D') + row); //move rook
 
 			//make castling impossible for colour that castled
-			global.castling[colour] = { k: false, q: false };
+			gameData.castling[colour] = { k: false, q: false };
 			events.castled = true;
 		}
 		else return false;
@@ -47,55 +48,55 @@ export default function makeMove(startCell, endCell, { isTest } = {}) {
 	//promotion
 	let isBackRank = endCell[1] === (colour === 'w' ? '8' : '1');
 	if (piece.toLowerCase() === 'p' && isBackRank) {
-		if (!global.promotionPiece) {
+		if (!gameData.promotionPiece) {
 			console.error('NO PROMOTION PIECE FOUND');
-			global.boardArray = beforeState;
+			gameData.boardArray = beforeState;
 			return false;
 		} else {
 			pieces.del(endCell);
-			global.promotionPiece = global.promotionPiece[colour === 'w' ? 'toUpperCase' : 'toLowerCase']();
-			pieces.add(global.promotionPiece, endCell);
-			global.promotionPiece = null;
+			gameData.promotionPiece = gameData.promotionPiece[colour === 'w' ? 'toUpperCase' : 'toLowerCase']();
+			pieces.add(gameData.promotionPiece, endCell);
+			gameData.promotionPiece = null;
 		}
 	}
 	//enpassant check (take old enpassant pawn && update enpassant square)
-	if (piece.toLowerCase() === 'p' && endCell === global.enpassantSquare) {
+	if (piece.toLowerCase() === 'p' && endCell === gameData.enpassantSquare) {
 		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1)
 		pieces.del(endCell[0] + enpassantNumber);
-		global.halfMoveCount = 0;
+		gameData.halfMoveCount = 0;
 		events.pieceCaptured = true;
 	}
 	const deltaLetter = Math.abs(+endCell[1] - +startCell[1]);
 	if (piece.toLowerCase() === 'p' && deltaLetter === 2) {
 		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1);
-		global.enpassantSquare = endCell[0] + enpassantNumber;
+		gameData.enpassantSquare = endCell[0] + enpassantNumber;
 	} else {
-		global.enpassantSquare = '-';
+		gameData.enpassantSquare = '-';
 	}
 
 	//check checker
-	if (isCheck(global.currentTurn)) {
-		global.boardArray = beforeState;
+	if (isCheck(gameData.currentTurn)) {
+		gameData.boardArray = beforeState;
 		return false;
 	}
 
 	//if rook or king make castling invalid
 	if (piece.toLowerCase() === 'k') {
-		global.castling[colour] = { k: false, q: false };
+		gameData.castling[colour] = { k: false, q: false };
 	} else if (piece.toLowerCase() === 'r') {
 		const isKingside = startCell[0] === 'H';
 		const side = isKingside ? 'k' : 'q';
-		global.castling[colour][side] = false;
+		gameData.castling[colour][side] = false;
 	}
 
 	//update halfMoveCount, currentTurn, moveNumber
-	if (colour === 'b') global.moveNumber++;
+	if (colour === 'b') gameData.moveNumber++;
 
-	if (piece.toLowerCase() === 'p' || events.pieceCaptured) global.halfMoveCount = 0;
-	else global.halfMoveCount++;
+	if (piece.toLowerCase() === 'p' || events.pieceCaptured) gameData.halfMoveCount = 0;
+	else gameData.halfMoveCount++;
 
 	//change turn
-	global.currentTurn = global.currentTurn === 'w' ? 'b' : 'w';
+	gameData.currentTurn = gameData.currentTurn === 'w' ? 'b' : 'w';
 
 	//add to log
 	let logText = '';
@@ -108,11 +109,11 @@ export default function makeMove(startCell, endCell, { isTest } = {}) {
 		logText += endCell;
 		if (events.promoted) logText += '=' + pieces.getPieceInCell(endCell).toUpperCase();
 	}
-	if (!isTest) global.logList.push(logText);
+	if (!isTest) gameData.logList.push(logText);
 
 	//update fen and move list
 	let fen = createFenFromBoardArray();
-	if (!isTest) global.moveList.push(fen);
+	if (!isTest) gameData.moveList.push(fen);
 
 	return fen;
 }

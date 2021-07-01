@@ -1,10 +1,11 @@
+import gameData from '../variables.js';
 import createBoardArray from './create-board.js';
 
 export default function undoMove() {
-	if (!global.moveList.length) return;
-	global.moveList.pop();
-	global.logList.pop();
-	const lastMove = global.moveList.slice(-1)[0];
+	if (!gameData.moveList.length) return;
+	gameData.moveList.pop();
+	gameData.logList.pop();
+	const lastMove = gameData.moveList.slice(-1)[0];
 	createBoardArray(lastMove);
 	return lastMove;
 }
