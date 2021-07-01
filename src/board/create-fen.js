@@ -5,10 +5,10 @@ export default function createFenFromBoardArray() {
 	let blankSquares = 0;
 
 	//go through array until end
-	for (const i in gameData.boardArray) {
+	for (let i in gameData.boardArray) {
 		const row = gameData.boardArray[i];
 
-		for (const j = 0; j < row.length; j++) {
+		for (let j = 0; j < row.length; j++) {
 			if (row[j] !== '-') {
 				if (blankSquares > 0) {
 					fenString += blankSquares;

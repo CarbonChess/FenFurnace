@@ -1,28 +1,24 @@
 import gameData from '../variables.js';
 
 export default function createBoardArray(fenString) {
+	const fenParts = fenString.split(' ');
+
 	gameData.currentFen = fenString;
 
-	const currentBoard = fenString.split(' ')[0].split('/');
-	gameData.currentTurn = fenString.split(' ')[1];
+	const currentBoard = fenParts[0].split('/');
+	gameData.currentTurn = fenParts[1];
 
-	//castling
-	gameData.castling['w'].q = false;
-	gameData.castling['w'].k = false;
-	gameData.castling['b'].q = false;
-	gameData.castling['b'].k = false;
-
-	const castleString = fenString.split(' ')[2];
-	for (let i in castleString) {
+	gameData.castling = { w: { k: false, q: false }, b: { k: false, q: false } };
+	const castleString = fenParts[2];
+	for (const i in castleString) {
 		const colour = castleString[i] === castleString[i].toUpperCase() ? 'w' : 'b';
-		gameData.castling[colour][castleString[i].toLowerCase()] = true;
+		const side = castleString[i].toLowerCase();
+		gameData.castling[colour][side] = true;
 	}
 
-	gameData.enpassantSquare = fenString.split(' ')[3].toUpperCase();
-	gameData.halfMoveCount = fenString.split(' ')[4];
-	gameData.moveNumber = fenString.split(' ')[5];
+	gameData.enpassantSquare = fenParts[3].toUpperCase();
+	gameData.halfMoveCount = fenParts[4];
+	gameData.moveNumber = fenParts[5];
 
-	gameData.boardArray = currentBoard.map(val => {
-		return val.replace(/[0-9]/g, n => '-'.repeat(n))
-	});
+	gameData.boardArray = currentBoard.map(val => val.replace(/[0-9]/g, n => '-'.repeat(n)));
 }

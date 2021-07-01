@@ -1,7 +1,8 @@
 import gameData from '../variables.js';
-import createFenFromBoardArray from './board/create-fen.js';
-import isCheck from './validation/is-check.js';
-import * as pieces from './pieces.js';
+import createFenFromBoardArray from '../board/create-fen.js';
+import isCheck from './is-check.js';
+import * as pieces from '../pieces.js';
+import * as validation from './validation.js';
 
 export default function makeMove(startCell, endCell, { isTest } = {}) {
 	// isTest=true: test the move instead of making it
@@ -42,7 +43,7 @@ export default function makeMove(startCell, endCell, { isTest } = {}) {
 	}
 
 	//move if valid
-	if (validateMove(startCell, endCell)) pieces.move(startCell, endCell);
+	if (validation.validateMove(startCell, endCell)) pieces.move(startCell, endCell);
 	else return false;
 
 	//promotion
