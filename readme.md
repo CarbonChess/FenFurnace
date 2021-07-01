@@ -37,9 +37,9 @@ FenFurnace is available [on npm](https://www.npmjs.org/package/fenfurnace):
 - `gameEndingStatus(colourId)`
   - Check the game has concluded and the result of the game (`'checkmate'`, `'stalemate'`, or `false`) for a given colour (`'w'` or `'b'`).
 
-### Globals
+### Variables
 
-The following values are given in `global`:
+The following values are given in import `gameData`:
 - `castling`: `{ w: { k, q }, b: { k, q } }` (each boolean)
 - `boardArray` (array)
 - `enpassantSquare` (`null` or string)
