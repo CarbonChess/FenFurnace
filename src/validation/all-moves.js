@@ -1,7 +1,7 @@
 import { indexToLetter } from '../helpers.js';
 import createFenFromBoardArray from '../board/create-fen.js';
 import createBoardArray from '../board/create-board.js';
-import * as validation from '../validation.js';
+import makeMove from './make-move.js';
 import * as pieces from '../pieces.js';
 
 export default function getAllMoves(cell) {
@@ -15,7 +15,7 @@ export default function getAllMoves(cell) {
 		for (let j = 1; j <= 8; j++) {
 			const targetCell = indexToLetter(j) + i;
 
-			if (validation.makeMove(cell, targetCell, { isTest: true })) {
+			if (makeMove(cell, targetCell, { isTest: true })) {
 				possibleSquares.push(targetCell);
 			}
 			createBoardArray(beforeState);

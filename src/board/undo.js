@@ -4,7 +4,7 @@ export default function undoMove() {
 	if (!global.moveList.length) return;
 	global.moveList.pop();
 	global.logList.pop();
-	let lastMove = global.moveList.slice(-1)[0];
+	const lastMove = global.moveList.slice(-1)[0];
 	createBoardArray(lastMove);
 	return lastMove;
 }

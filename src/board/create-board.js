@@ -1,7 +1,7 @@
 export default function createBoardArray(fenString) {
 	global.currentFen = fenString;
 
-	let currentBoard = fenString.split(' ')[0].split('/');
+	const currentBoard = fenString.split(' ')[0].split('/');
 	global.currentTurn = fenString.split(' ')[1];
 
 	//castling
@@ -10,9 +10,9 @@ export default function createBoardArray(fenString) {
 	global.castling['b'].q = false;
 	global.castling['b'].k = false;
 
-	let castleString = fenString.split(' ')[2];
+	const castleString = fenString.split(' ')[2];
 	for (let i in castleString) {
-		let colour = castleString[i] === castleString[i].toUpperCase() ? 'w' : 'b';
+		const colour = castleString[i] === castleString[i].toUpperCase() ? 'w' : 'b';
 		global.castling[colour][castleString[i].toLowerCase()] = true;
 	}
 

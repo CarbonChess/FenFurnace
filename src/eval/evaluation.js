@@ -3,7 +3,7 @@ export default function evaluation() {
 	let blackEval = 0;
 
 	//add material difference to colour
-	let material = materialDifference(global.boardArray);
+	const material = materialDifference(global.boardArray);
 	if (material > 0)
 		whiteEval += material;
 	else

@@ -1,10 +1,10 @@
 import './index.js'; // setup globals
-import * as validation from './src/validation.js';
 import setupBoard from './src/board/setup-board.js';
 import createBoard from './src/board/create-board.js';
 import undoMove from './src/board/undo.js';
 import isCheck from './src/validation/is-check.js';
 import findAllMoves from './src/validation/all-moves.js';
+import makeMove from './src/validation/make-move.js';
 
 function test() {
 
@@ -26,7 +26,7 @@ function test() {
 	// Castling & log output
 	createBoard('rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/R3K2R w KQkq - 4 3');
 	console.assert(global.boardArray[7] === 'R---K--R', 'King has not casled');
-	validation.makeMove('E1', 'C1');
+	makeMove('E1', 'C1');
 	console.assert(global.boardArray[7] === '--KR---R', 'King has castled');
 	console.assert(!global.castling.w.k && global.castling.b.q, 'Castling invalid for white');
 	console.assert(global.logList.pop() === 'O-O-O', 'Correct log for castling');
@@ -37,13 +37,13 @@ function test() {
 
 	// Moving while in check
 	createBoard('rn1qkbnr/ppp1pppp/3p4/8/2B3b1/4P3/PPPP1PPP/RNBQK1NR w KQkq - 2 3');
-	console.assert(!validation.makeMove('E1', 'E2'), 'Invalid king move');
+	console.assert(!makeMove('E1', 'E2'), 'Invalid king move');
 	console.assert(global.boardArray[7] === 'RNBQK-NR', 'King should not have moved');
 	console.assert(!isCheck('w'), 'White should not be in check');
 
 	// Undoing
 	setupBoard();
-	validation.makeMove('E2', 'E4');
+	makeMove('E2', 'E4');
 	undoMove();
 	console.assert(global.moveNumber == '1', 'Still on first move');
 	console.assert(global.enpassantSquare !== 'E3', 'Enpassant square reverted');
@@ -57,7 +57,7 @@ function test() {
 	setupBoard();
 	createBoard('rnbqkbnr/pPppppp1/8/8/8/8/1PPPPPpP/RNBQKBNR w KQkq - 0 5');
 	global.promotionPiece = 'Q';
-	validation.makeMove('B7', 'A8');
+	makeMove('B7', 'A8');
 	console.assert(global.boardArray[0] === 'Qnbqkbnr', 'Pawn is promoted to queen');
 
 }

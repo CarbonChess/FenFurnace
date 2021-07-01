@@ -1,6 +1,6 @@
-import * as pieces from '../pieces.js';
 import { indexToLetter } from '../helpers.js';
-import * as validation from '../validation.js';
+import * as pieces from '../pieces.js';
+import * as validation from './validation.js';
 
 export default function isCheck(colour) {
 	// get the king cells

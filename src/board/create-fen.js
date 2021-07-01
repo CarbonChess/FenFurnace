@@ -1,6 +1,7 @@
 export default function createFenFromBoardArray() {
-	let fenString = "";
+	let fenString = '';
 	let blankSquares = 0;
+
 	//go through array until end
 	for (let i in global.boardArray) {
 		let row = global.boardArray[i];
@@ -22,11 +23,12 @@ export default function createFenFromBoardArray() {
 		if (blankSquares > 0) fenString += blankSquares;
 		blankSquares = 0;
 
-		if (i != 7) { fenString += '\/' };
+		if (i !== 7) { fenString += '\/' };
 	}
 
 	//current turn
 	fenString += ' ' + global.currentTurn;
+
 	//castling
 	let castleString = '';
 	if (global.castling['w'].k) castleString += 'K';
