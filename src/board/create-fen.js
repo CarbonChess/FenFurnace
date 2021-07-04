@@ -1,13 +1,15 @@
+import gameData from '../variables.js';
+
 export default function createFenFromBoardArray() {
-	let fenString = "";
+	let fenString = '';
 	let blankSquares = 0;
+
 	//go through array until end
-	for (let i in global.boardArray) {
-		let row = global.boardArray[i];
+	for (let i in gameData.boardArray) {
+		const row = gameData.boardArray[i];
 
 		for (let j = 0; j < row.length; j++) {
 			if (row[j] !== '-') {
-
 				if (blankSquares > 0) {
 					fenString += blankSquares;
 					blankSquares = 0;
@@ -22,24 +24,25 @@ export default function createFenFromBoardArray() {
 		if (blankSquares > 0) fenString += blankSquares;
 		blankSquares = 0;
 
-		if (i != 7) { fenString += '\/' };
+		if (i !== 7) fenString += '\/';
 	}
 
 	//current turn
-	fenString += ' ' + global.currentTurn;
+	fenString += ' ' + gameData.currentTurn;
+
 	//castling
 	let castleString = '';
-	if (global.castling['w'].k) castleString += 'K';
-	if (global.castling['w'].q) castleString += 'Q';
-	if (global.castling['b'].k) castleString += 'k';
-	if (global.castling['b'].q) castleString += 'q';
+	if (gameData.castling.w.k) castleString += 'K';
+	if (gameData.castling.w.q) castleString += 'Q';
+	if (gameData.castling.b.k) castleString += 'k';
+	if (gameData.castling.b.q) castleString += 'q';
 	fenString += ' ' + castleString;
 
 	//enpassant
-	fenString += ' ' + global.enpassantSquare;
+	fenString += ' ' + gameData.enpassantSquare;
 	//halfmove clock
-	fenString += ' ' + global.halfMoveCount;
+	fenString += ' ' + gameData.halfMoveCount;
 	//move number
-	fenString += ' ' + global.moveNumber;
+	fenString += ' ' + gameData.moveNumber;
 	return fenString;
 }

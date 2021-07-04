@@ -1,26 +1,24 @@
+import gameData from '../variables.js';
+
 export default function createBoardArray(fenString) {
-	global.currentFen = fenString;
+	const fenParts = fenString.split(' ');
 
-	let currentBoard = fenString.split(' ')[0].split('/');
-	global.currentTurn = fenString.split(' ')[1];
+	gameData.currentFen = fenString;
 
-	//castling
-	global.castling['w'].q = false;
-	global.castling['w'].k = false;
-	global.castling['b'].q = false;
-	global.castling['b'].k = false;
+	const currentBoard = fenParts[0].split('/');
+	gameData.currentTurn = fenParts[1];
 
-	let castleString = fenString.split(' ')[2];
-	for (let i in castleString) {
-		let colour = castleString[i] === castleString[i].toUpperCase() ? 'w' : 'b';
-		global.castling[colour][castleString[i].toLowerCase()] = true;
+	gameData.castling = { w: { k: false, q: false }, b: { k: false, q: false } };
+	const castleString = fenParts[2];
+	for (const i in castleString) {
+		const colour = castleString[i] === castleString[i].toUpperCase() ? 'w' : 'b';
+		const side = castleString[i].toLowerCase();
+		gameData.castling[colour][side] = true;
 	}
 
-	global.enpassantSquare = fenString.split(' ')[3].toUpperCase();
-	global.halfMoveCount = fenString.split(' ')[4];
-	global.moveNumber = fenString.split(' ')[5];
+	gameData.enpassantSquare = fenParts[3].toUpperCase();
+	gameData.halfMoveCount = fenParts[4];
+	gameData.moveNumber = fenParts[5];
 
-	global.boardArray = currentBoard.map(val => {
-		return val.replace(/[0-9]/g, n => '-'.repeat(n))
-	});
+	gameData.boardArray = currentBoard.map(val => val.replace(/[0-9]/g, n => '-'.repeat(n)));
 }

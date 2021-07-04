@@ -1,3 +1,4 @@
+import gameData from '../variables.js';
 import * as pieces from '../pieces.js';
 import createFen from '../board/create-fen.js';
 import isCheck from './is-check.js';
@@ -6,7 +7,7 @@ import { indexToLetter } from '../helpers.js';
 
 export default function gameEndingStatus(colour) {
 
-	if (global.halfMoveCount >= 100)
+	if (gameData.halfMoveCount >= 100)
 		return 'stalemate'; // 50 move rule
 	if (createFen().split(' ')[0].replace(/\/|\d+/g, '').toLowerCase() === 'kk')
 		return 'stalemate'; // only 2 kings left
