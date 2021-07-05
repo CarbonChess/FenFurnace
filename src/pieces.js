@@ -28,6 +28,7 @@ export function move(startCell, endCell) {
 	let originalPiece = getPieceInCell(startCell);
 	add(originalPiece, endCell);
 	del(startCell);
+	return true;
 }
 
 export function add(piece, cell) {

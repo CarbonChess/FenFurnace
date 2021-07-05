@@ -15,8 +15,8 @@ export default class GameData {
 	static get boardArray() { return this.#boardArray; }
 	static set boardArray(arr) { this.#boardArray = arr; }
 
-	static get empassantSquare() { return this.#enpassantSquare; }
-	static set empassantSquare(val) { this.#enpassantSquare = val; }
+	static get enpassantSquare() { return this.#enpassantSquare; }
+	static set enpassantSquare(val) { this.#enpassantSquare = val; }
 
 	static get moveList() { return this.#moveList; }
 	static set moveList(arr) { this.#moveList = arr; }
