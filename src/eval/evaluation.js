@@ -9,7 +9,7 @@ export default function evaluation() {
 	if (material > 0)
 		whiteEval += material;
 	else
-		blackEval += Maths.abs(material);
+		blackEval += Math.abs(material);
 
 	return whiteEval - blackEval;
 }
