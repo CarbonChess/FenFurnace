@@ -1,15 +1,15 @@
-import gameData from '../variables.js';
+import materialDifference from './material-diff';
 
-export default function evaluation() {
+export default function evaluation(): number {
 	let whiteEval = 0;
 	let blackEval = 0;
 
 	//add material difference to colour
-	const material = materialDifference(gameData.boardArray);
+	const material = materialDifference();
 	if (material > 0)
 		whiteEval += material;
 	else
-		blackEval += Maths.abs(material);
+		blackEval += Math.abs(material);
 
 	return whiteEval - blackEval;
 }

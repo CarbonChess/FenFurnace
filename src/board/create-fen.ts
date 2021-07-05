@@ -1,11 +1,11 @@
-import gameData from '../variables.js';
+import gameData from '../variables';
 
-export default function createFenFromBoardArray() {
+export default function createFenFromBoardArray(): string {
 	let fenString = '';
 	let blankSquares = 0;
 
-	//go through array until end
-	for (let i in gameData.boardArray) {
+	//loop through board array to create fen
+	for (let i = 0; i < gameData.boardArray.length; i++) {
 		const row = gameData.boardArray[i];
 
 		for (let j = 0; j < row.length; j++) {
