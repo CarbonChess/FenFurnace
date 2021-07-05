@@ -1,15 +1,16 @@
-import gameData from '../variables.js';
-import { invertColour } from '../helpers.js';
-import * as pieces from '../pieces.js';
+import gameData from '../variables';
+import { invertColour } from '../helpers';
+import * as pieces from '../pieces';
+import { Colour, Cell } from '../types';
 
-export function validateMove(startCell, endCell) {
+export function validateMove(startCell: Cell, endCell: Cell): boolean {
 	if (startCell === endCell) return false;
 	return isValid(startCell, endCell) && !pieceInWay(startCell, endCell);
 }
 
-export function isValid(startCell, endCell) {
+export function isValid(startCell: Cell, endCell: Cell): boolean {
 	let piece = pieces.getPieceInCell(startCell);
-	let colour = piece === piece.toUpperCase() ? 'w' : 'b';
+	let colour: 'w' | 'b' = piece === piece.toUpperCase() ? 'w' : 'b';
 	let startNumber = parseInt(startCell[1]);
 	let endNumber = parseInt(endCell[1]);
 	let deltaNumber = Math.abs(endNumber - startNumber);
@@ -37,9 +38,9 @@ export function isValid(startCell, endCell) {
 	}
 }
 
-export function pieceInWay(startCell, endCell) {
+export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 	let invalidMove = false;
-	const direction = {};
+	const direction: { l?: number, n?: number } = {};
 	let piece = pieces.getPieceInCell(startCell);
 	let colour = pieces.getColour(startCell);
 
@@ -64,15 +65,15 @@ export function pieceInWay(startCell, endCell) {
 		case 'p': {
 			if (deltaLetter === 0) {
 				if (colour === 'w') {
-					invalidMove = pieces.inCell(startCell[0] + (startNumber + 1));
+					invalidMove = pieces.inCell(startCell[0] + (startNumber + 1) as Cell);
 					if (deltaNumber === 2 && !invalidMove) {
-						invalidMove = pieces.inCell(startCell[0] + (startNumber + 2));
+						invalidMove = pieces.inCell(startCell[0] + (startNumber + 2) as Cell);
 					}
 				}
 				else {
-					invalidMove = pieces.inCell(startCell[0] + (startNumber - 1));
+					invalidMove = pieces.inCell(startCell[0] + (startNumber - 1) as Cell);
 					if (deltaNumber === 2 && !invalidMove) {
-						invalidMove = pieces.inCell(startCell[0] + (startNumber - 2));
+						invalidMove = pieces.inCell(startCell[0] + (startNumber - 2) as Cell);
 					}
 				}
 			}
@@ -83,9 +84,9 @@ export function pieceInWay(startCell, endCell) {
 		case 'q': {
 			let hasCollided = false;
 			for (let i = 1; i <= Math.max(deltaLetter, deltaNumber); i++) {
-				const letter = String.fromCharCode(parseInt(startLetter.charCodeAt(0)) + direction.l * i);
+				const letter = String.fromCharCode(startLetter.charCodeAt(0) + direction.l * i);
 				const number = startNumber + direction.n * i;
-				const pieceColour = pieces.getColour(letter + number);
+				const pieceColour = pieces.getColour(letter + number as Cell);
 
 				if (pieceColour === colour || hasCollided)
 					invalidMove = true;

@@ -1,11 +1,12 @@
-import gameData from '../variables.js';
-import * as pieces from '../pieces.js';
-import createFen from '../board/create-fen.js';
-import isCheck from './is-check.js';
-import findAllMoves from './all-moves.js';
-import { indexToLetter } from '../helpers.js';
+import gameData from '../variables';
+import * as pieces from '../pieces';
+import createFen from '../board/create-fen';
+import isCheck from './is-check';
+import findAllMoves from './all-moves';
+import { indexToLetter } from '../helpers';
+import { Colour, EndingStatus } from '../types';
 
-export default function gameEndingStatus(colour) {
+export default function gameEndingStatus(colour: Colour): EndingStatus {
 
 	if (gameData.halfMoveCount >= 100)
 		return 'stalemate'; // 50 move rule

@@ -1,10 +1,11 @@
-import gameData from '../variables.js';
-import createFenFromBoardArray from '../board/create-fen.js';
-import isCheck from './is-check.js';
-import * as pieces from '../pieces.js';
-import * as validation from './validation.js';
+import gameData from '../variables';
+import createFenFromBoardArray from '../board/create-fen';
+import isCheck from './is-check';
+import * as pieces from '../pieces';
+import * as validation from './validation';
+import { Cell } from '../types';
 
-export default function makeMove(startCell, endCell, { isTest } = {}) {
+export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { isTest?: boolean } = {}) {
 	// isTest=true: test the move instead of making it
 
 	const piece = pieces.getPieceInCell(startCell);

@@ -1,13 +1,15 @@
+import { Colour, Board } from './types';
+
 export default class GameData {
 	static #castling = { w: { k: true, q: true }, b: { k: true, q: true } };
-	static #boardArray = [];
-	static #enpassantSquare = null;
-	static #moveList = [];
-	static #currentTurn = null;
-	static #halfMoveCount = 0;
-	static #moveNumber = 0;
-	static #promotionPiece = null;
-	static #logList = [];
+	static #boardArray: Board = [];
+	static #enpassantSquare: string | null = null;
+	static #moveList: string[] = [];
+	static #currentTurn: Colour = 'w';
+	static #halfMoveCount: number = 0;
+	static #moveNumber: number = 0;
+	static #promotionPiece: string | null = null;
+	static #logList: string[] = [];
 
 	static get castling() { return this.#castling; }
 	static set castling(obj) { this.#castling = obj; }
@@ -15,8 +17,8 @@ export default class GameData {
 	static get boardArray() { return this.#boardArray; }
 	static set boardArray(arr) { this.#boardArray = arr; }
 
-	static get empassantSquare() { return this.#enpassantSquare; }
-	static set empassantSquare(val) { this.#enpassantSquare = val; }
+	static get enpassantSquare() { return this.#enpassantSquare; }
+	static set enpassantSquare(val) { this.#enpassantSquare = val; }
 
 	static get moveList() { return this.#moveList; }
 	static set moveList(arr) { this.#moveList = arr; }

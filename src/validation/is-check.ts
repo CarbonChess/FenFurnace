@@ -1,8 +1,9 @@
-import { indexToLetter } from '../helpers.js';
-import * as pieces from '../pieces.js';
-import * as validation from './validation.js';
+import { indexToLetter } from '../helpers';
+import * as pieces from '../pieces';
+import * as validation from './validation';
+import { Colour } from '../types';
 
-export default function isCheck(colour) {
+export default function isCheck(colour: Colour): boolean {
 	// get the king cells
 	let kingCells = { w: '', b: '' };
 	for (let i = 1; i <= 8; i++) {
