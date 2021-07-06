@@ -1,10 +1,12 @@
-import gameData from './src/variables.js';
-import setupBoard from './src/board/setup-board.js';
-import createBoard from './src/board/create-board.js';
-import undoMove from './src/board/undo.js';
-import isCheck from './src/validation/is-check.js';
-import findAllMoves from './src/validation/all-moves.js';
-import makeMove from './src/validation/make-move.js';
+const {
+	gameData,
+	setupBoard,
+	createBoard,
+	undoMove,
+	isCheck,
+	findAllMoves,
+	makeMove,
+} = require('./src/index.js');
 
 function test() {
 

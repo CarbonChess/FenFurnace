@@ -19,7 +19,7 @@
 		"src/**/*.js"
 	],
 	"scripts": {
-		"test": "node test",
+		"test": "tsc && node test",
 		"compile": "tsc && npx webpack --entry ./src/browser.js -o ./dist"
 	},
 	"dependencies": {},
