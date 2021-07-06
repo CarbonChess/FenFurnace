@@ -3,23 +3,22 @@ import * as pieces from '../pieces';
 import createFen from '../board/create-fen';
 import isCheck from './is-check';
 import findAllMoves from './all-moves';
-import { indexToLetter } from '../helpers';
+import { coordsToCell } from '../helpers';
 import { Colour, EndingStatus } from '../types';
 
 export default function gameEndingStatus(colour: Colour): EndingStatus {
 
-	if (gameData.halfMoveCount >= 100)
-		return 'stalemate'; // 50 move rule
-	if (createFen().split(' ')[0].replace(/\/|\d+/g, '').toLowerCase() === 'kk')
-		return 'stalemate'; // only 2 kings left
+	const fiftyMoveRule = gameData.halfMoveCount >= 100;
+	const onlyKings = createFen().split(' ')[0].replace(/\/|\d+/g, '').toLowerCase() === 'kk';
+	if (fiftyMoveRule || onlyKings) return 'stalemate';
 
-	let currentlyCheck = isCheck(colour);
+	const currentlyCheck = isCheck(colour);
 	let noValidMoves = true;
 
 	outer:
 	for (let i = 1; i <= 8; i++) {
 		for (let j = 1; j <= 8; j++) {
-			const startCell = indexToLetter(j) + i;
+			const startCell = coordsToCell(j, i);
 			if (pieces.getColour(startCell) === colour) {
 				if (findAllMoves(startCell).length > 0)
 					noValidMoves = false;

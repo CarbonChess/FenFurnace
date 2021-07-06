@@ -1,5 +1,5 @@
 import gameData from '../variables';
-import { Colour } from '../types';
+import { Cell, Colour } from '../types';
 
 export default function createBoardArray(fenString: string): void {
 	const fenParts = fenString.split(' ');
@@ -15,7 +15,7 @@ export default function createBoardArray(fenString: string): void {
 		gameData.castling[colour][side] = true;
 	}
 
-	gameData.enpassantSquare = fenParts[3].toUpperCase();
+	gameData.enpassantSquare = fenParts[3].toUpperCase() as Cell;
 	gameData.halfMoveCount = +fenParts[4];
 	gameData.moveNumber = +fenParts[5];
 

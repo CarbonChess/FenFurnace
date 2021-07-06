@@ -1,4 +1,4 @@
-import { indexToLetter } from '../helpers';
+import { coordsToCell } from '../helpers';
 import createFenFromBoardArray from '../board/create-fen';
 import createBoardArray from '../board/create-board';
 import makeMove from './make-move';
@@ -14,7 +14,7 @@ export default function getAllMoves(cell: Cell): Board {
 	let beforeState = createFenFromBoardArray();
 	for (let i = 1; i <= 8; i++) {
 		for (let j = 1; j <= 8; j++) {
-			const targetCell = indexToLetter(j) + i;
+			const targetCell = coordsToCell(j, i);
 
 			if (makeMove(cell, targetCell, { isTest: true })) {
 				possibleSquares.push(targetCell);
