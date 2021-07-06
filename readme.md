@@ -36,6 +36,8 @@ FenFurnace is available [on npm](https://www.npmjs.org/package/fenfurnace):
   - Checks whether a given colour (`'w'` or `'b'`) is currently in check.
 - `gameEndingStatus(colourId)`
   - Check the game has concluded and the result of the game (`'checkmate'`, `'stalemate'`, or `false`) for a given colour (`'w'` or `'b'`).
+- `points()`
+  - Return an object containing points scores for white (`w`) and black (`b`).
 
 ### Variables
 
@@ -45,7 +47,7 @@ The following values are given in import `gameData`:
 - `enpassantSquare` (null or string)
 - `moveList` (array)
 - `logList` (array)
-- `currentTurn` (`null` or string)
+- `currentTurn` (null or string)
 - `halfMoveCount` (int)
 - `moveNumber` (int)
 - `promotionPiece` (string)

@@ -1,6 +1,6 @@
-import gameData from '../variables';
+import gameData from './variables';
 
-export default function materialDifference(): number {
+export default function points(): { w: number, b: number } {
 	let points = { w: 0, b: 0 };
 
 	for (let row in gameData.boardArray) {
@@ -12,5 +12,5 @@ export default function materialDifference(): number {
 		}
 	}
 
-	return points.w - points.b;
+	return points;
 }

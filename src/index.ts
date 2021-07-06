@@ -1,6 +1,7 @@
 import gameData from './variables';
 import setupBoard from './board/setup-board';
 import createBoard from './board/create-board';
+import points from './points';
 import * as validation from './validation/validation';
 import makeMove from './validation/make-move';
 import findAllMoves from './validation/all-moves';
@@ -12,6 +13,7 @@ export = {
 	gameData,
 	setupBoard,
 	createBoard,
+	points,
 	makeMove,
 	validation,
 	findAllMoves,
