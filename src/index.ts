@@ -8,7 +8,7 @@ import isCheck from './validation/is-check';
 import gameEndingStatus from './validation/ending';
 import undoMove from './board/undo';
 
-export default {
+export = {
 	gameData,
 	setupBoard,
 	createBoard,
