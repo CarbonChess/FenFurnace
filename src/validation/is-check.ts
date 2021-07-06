@@ -5,13 +5,13 @@ import { Colour } from '../types';
 
 export default function isCheck(colour: Colour): boolean {
 	// get the king cells
-	let kingCells = { w: '', b: '' };
+	const kingCells = { w: '', b: '' };
 	for (let i = 1; i <= 8; i++) {
 		for (let j = 1; j <= 8; j++) {
 			const testCell = indexToLetter(j) + i;
 			const testPiece = pieces.getPieceInCell(testCell);
 			if (testPiece.toLowerCase() === 'k') {
-				let kingColour = pieces.getColour(testCell);
+				const kingColour = pieces.getColour(testCell);
 				kingCells[kingColour] = testCell;
 			}
 		}

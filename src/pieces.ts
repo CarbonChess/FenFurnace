@@ -1,9 +1,8 @@
 import gameData from './variables';
 import { Colour, Cell, PieceID } from './types';
 
-export function getColour(cell: Cell): Colour | undefined {
+export function getColour(cell: Cell): Colour {
 	const piece = getPieceInCell(cell);
-	if (piece === '-') return;
 	return isWhite(piece) ? 'w' : 'b';
 }
 
@@ -32,7 +31,7 @@ export function move(startCell: Cell, endCell: Cell): boolean {
 
 export function add(piece: PieceID, cell: Cell): void {
 	// console.log('Adding piece', piece, 'to', cell);
-	const col = (parseInt(cell[0], 36) - 9);
+	const col = parseInt(cell[0], 36) - 9;
 	const row = 8 - (+cell[1]);
 	let str = gameData.boardArray[row];
 	gameData.boardArray[row] = str.substr(0, col - 1) + piece + str.substr(col);
