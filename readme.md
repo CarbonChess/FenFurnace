@@ -44,11 +44,11 @@ The following values are given in import `gameData`:
 - `boardArray` (array)
 - `enpassantSquare` (null or string)
 - `moveList` (array)
+- `logList` (array)
 - `currentTurn` (`null` or string)
 - `halfMoveCount` (int)
 - `moveNumber` (int)
 - `promotionPiece` (string)
-- `logList` (array)
 
 ## Build
 

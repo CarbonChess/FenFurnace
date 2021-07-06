@@ -47,7 +47,7 @@ function test() {
 	setupBoard();
 	makeMove('E2', 'E4');
 	undoMove();
-	console.assert(gameData.moveNumber == '1', 'Still on first move');
+	console.assert(gameData.moveNumber === 1, 'Still on first move');
 	console.assert(gameData.enpassantSquare !== 'E3', 'Enpassant square reverted');
 
 	// Check king moves

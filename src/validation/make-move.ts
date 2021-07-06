@@ -3,7 +3,7 @@ import createFenFromBoardArray from '../board/create-fen';
 import isCheck from './is-check';
 import * as pieces from '../pieces';
 import * as validation from './validation';
-import { Cell } from '../types';
+import { Cell, PieceID } from '../types';
 
 export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { isTest?: boolean } = {}) {
 	// isTest=true: test the move instead of making it
@@ -56,7 +56,7 @@ export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { i
 			return false;
 		} else {
 			pieces.del(endCell);
-			gameData.promotionPiece = gameData.promotionPiece[colour === 'w' ? 'toUpperCase' : 'toLowerCase']();
+			gameData.promotionPiece = gameData.promotionPiece[colour === 'w' ? 'toUpperCase' : 'toLowerCase']() as PieceID;
 			pieces.add(gameData.promotionPiece, endCell);
 			gameData.promotionPiece = null;
 		}
