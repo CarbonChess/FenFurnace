@@ -2,10 +2,9 @@ import gameData from './variables';
 import { Colour, Cell, PieceID } from './types';
 
 export function getColour(cell: Cell): Colour {
-	if (!inCell(cell)) {
-		throw new Error('Cell ' + cell + ' is empty');
-	}
-	return isWhite(getPieceInCell(cell)) ? 'w' : 'b';
+	const piece = getPieceInCell(cell);
+	if (piece === '-') throw new Error(`Cell ${cell} is empty`);
+	return isWhite(piece) ? 'w' : 'b';
 }
 
 export function getPieceInCell(cell: Cell): PieceID {
@@ -25,7 +24,7 @@ export function move(startCell: Cell, endCell: Cell): boolean {
 		return false;
 	}
 	// console.log('Moving', startCell, '->', endCell);
-	let originalPiece = getPieceInCell(startCell);
+	const originalPiece = getPieceInCell(startCell);
 	add(originalPiece, endCell);
 	del(startCell);
 	return true;
