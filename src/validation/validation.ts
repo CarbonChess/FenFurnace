@@ -10,7 +10,7 @@ export function validateMove(startCell: Cell, endCell: Cell): boolean {
 
 export function isValid(startCell: Cell, endCell: Cell): boolean {
 	let piece = pieces.getPieceInCell(startCell);
-	let colour: 'w' | 'b' = piece === piece.toUpperCase() ? 'w' : 'b';
+	let colour: Colour = piece === piece.toUpperCase() ? 'w' : 'b';
 	let startNumber = parseInt(startCell[1]);
 	let endNumber = parseInt(endCell[1]);
 	let deltaNumber = Math.abs(endNumber - startNumber);
