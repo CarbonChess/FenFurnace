@@ -90,7 +90,7 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 
 				if (pieceColour === colour || hasCollided)
 					invalidMove = true;
-				if (pieceColour === invertColour(colour) && !hasCollided)
+				if (colour && pieceColour === invertColour(colour) && !hasCollided)
 					hasCollided = true;
 			}
 			return invalidMove;

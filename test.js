@@ -27,7 +27,7 @@ function test() {
 
 	// Castling & log output
 	createBoard('rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/R3K2R w KQkq - 4 3');
-	console.assert(gameData.boardArray[7] === 'R---K--R', 'King has not casled');
+	console.assert(gameData.boardArray[7] === 'R---K--R', 'King has not castled');
 	makeMove('E1', 'C1');
 	console.assert(gameData.boardArray[7] === '--KR---R', 'King has castled');
 	console.assert(!gameData.castling.w.k && gameData.castling.b.q, 'Castling invalid for white');

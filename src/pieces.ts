@@ -1,9 +1,9 @@
 import gameData from './variables';
 import { Colour, Cell, PieceID } from './types';
 
-export function getColour(cell: Cell): Colour {
+export function getColour(cell: Cell): Colour | undefined {
 	const piece = getPieceInCell(cell);
-	if (piece === '-') throw new Error(`Cell ${cell} is empty`);
+	if (piece === '-') return;
 	return isWhite(piece) ? 'w' : 'b';
 }
 
