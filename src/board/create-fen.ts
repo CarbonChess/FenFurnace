@@ -24,7 +24,7 @@ export default function createFenFromBoardArray(): string {
 		if (blankSquares > 0) fenString += blankSquares;
 		blankSquares = 0;
 
-		if (i !== 7) fenString += '\/';
+		if (i !== '7') fenString += '\/';
 	}
 
 	//current turn
