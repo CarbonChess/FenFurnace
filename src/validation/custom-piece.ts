@@ -1,47 +1,41 @@
-import pieces from './pieces.js';
+import * as pieces from '../pieces';
+import { Column, Row, Cell, Colour } from '../types';
+
+type Validator = (deltaLetter: number, deltaNumber: number) => boolean;
 
 class Piece {
-
-    constructor({ template = 'none', validWhen } = {}) {
+    template: string;
+    validWhen: Validator | undefined;
+    constructor({ template = 'none', validWhen }: { template?: string, validWhen?: Validator } = {}) {
         this.template = template.toLowerCase();
         this.validWhen = validWhen;
     }
 
-    validate(colour, startCell, endCell) {
-        const startLetter = startCell[0];
-        const endLetter = endCell[0];
+    validate(colour: Colour, startCell: Cell, endCell: Cell): boolean {
+        const startLetter = startCell[0] as Column;
+        const endLetter = endCell[0] as Column;
         const deltaLetter = Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0));
-        const startNumber = parseInt(startCell[1]);
-        const endNumber = parseInt(endCell[1]);
-        const deltaNumber = deltaNumber = Math.abs(endNumber - startNumber);
+        const startNumber = +startCell[1] as Row;
+        const endNumber = +endCell[1] as Row;
+        const deltaNumber = Math.abs(endNumber - startNumber);
 
+        if (this.validWhen?.(deltaLetter, deltaNumber)) return true;
+
+        let invalidMove = false;
         switch (this.template) {
             case 'pawn': {
-                let invalidMove = false;
-                if (deltaLetter !== 0) return !invalidMove;
-                if (colour === 'w') {
-                    invalidMove = pieces.inCell(startLetter + (startNumber + 1));
-                    if (deltaNumber === 2 && !invalidMove) {
-                        invalidMove = pieces.inCell(startLetter + (startNumber + 2));
-                    }
-                }
-                else {
-                    invalidMove = pieces.inCell(startLetter + (startNumber - 1));
-                    if (deltaNumber === 2 && !invalidMove) {
-                        invalidMove = pieces.inCell(startLetter + (startNumber - 2));
-                    }
-                }
+                if (deltaLetter !== 0) return invalidMove;
+                const direction = colour === 'w' ? +1 : -1;
+                invalidMove = pieces.inCell(startLetter + ((startNumber + deltaNumber) * direction) as Cell);
                 return !invalidMove;
             }
-            default: {
-                return this.validWhen(deltaLetter, deltaNumber);
-            }
         }
+        return false;
     }
 
 }
 
 let pawn = new Piece({ template: 'pawn' });
-pawn.validate('white', 'E2', 'E4');
+pawn.validate('w', 'E2', 'E4');
 let god = new Piece({ validWhen: () => true });
-god.validate('white', 'A1', 'H4');
+god.validate('w', 'A1', 'H4');

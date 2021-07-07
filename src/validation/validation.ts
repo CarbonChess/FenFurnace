@@ -51,7 +51,6 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 	let endLetter = endCell[0];
 	let deltaLetter = Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0));
 
-
 	// determine direction
 	if (endLetter > startLetter) direction.l = 1;
 	else if (endLetter < startLetter) direction.l = -1;
@@ -64,17 +63,10 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 	switch (piece.toLowerCase()) {
 		case 'p': {
 			if (deltaLetter === 0) {
-				if (colour === 'w') {
-					invalidMove = pieces.inCell(startCell[0] + (startNumber + 1) as Cell);
-					if (deltaNumber === 2 && !invalidMove) {
-						invalidMove = pieces.inCell(startCell[0] + (startNumber + 2) as Cell);
-					}
-				}
-				else {
-					invalidMove = pieces.inCell(startCell[0] + (startNumber - 1) as Cell);
-					if (deltaNumber === 2 && !invalidMove) {
-						invalidMove = pieces.inCell(startCell[0] + (startNumber - 2) as Cell);
-					}
+				const direction = colour === 'w' ? +1 : -1;
+				invalidMove = pieces.inCell(startCell[0] + (startNumber + 1 * direction) as Cell);
+				if (deltaNumber === 2 && !invalidMove) {
+					invalidMove = pieces.inCell(startCell[0] + (startNumber + 2 * direction) as Cell);
 				}
 			}
 			return invalidMove;
