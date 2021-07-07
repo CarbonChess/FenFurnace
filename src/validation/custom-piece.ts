@@ -1,3 +1,5 @@
+import gameData from '../variables';
+import { invertColour } from '../helpers';
 import * as pieces from '../pieces';
 import { Column, Row, Cell, Colour } from '../types';
 
@@ -24,9 +26,17 @@ class Piece {
         let invalidMove = false;
         switch (this.template) {
             case 'pawn': {
-                if (deltaLetter !== 0) return invalidMove;
-                const direction = colour === 'w' ? +1 : -1;
-                invalidMove = pieces.inCell(startLetter + ((startNumber + deltaNumber) * direction) as Cell);
+                if (deltaLetter === 0) {
+                    const direction = colour === 'w' ? +1 : -1;
+                    invalidMove = pieces.inCell(startLetter + ((startNumber + deltaNumber) * direction) as Cell);
+                }
+                if (!invalidMove) {
+                    const takingPiece = deltaLetter === 1 && deltaNumber === 1 && pieces.inCell(endCell) && pieces.getColour(endCell) === invertColour(colour);
+                    const pawnMove = deltaNumber === 1 || (deltaNumber === 2 && [2, 7].includes(startNumber));
+                    const forward = colour === 'w' ? endNumber > startNumber : endNumber < startNumber;
+                    const enpassantTaken = endCell === gameData.enpassantSquare && deltaLetter === 1 && deltaNumber === 1;
+                    return (takingPiece || deltaLetter === 0 || enpassantTaken) && pawnMove && forward;
+                }
                 return !invalidMove;
             }
         }
