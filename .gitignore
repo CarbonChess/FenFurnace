@@ -1,3 +1,7 @@
+# Dependencies
 node_modules/
+
+# Compiled output
 dist/
-*-dev.*
+src/**/*.js
+src/**/*.d.ts

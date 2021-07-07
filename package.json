@@ -1,6 +1,6 @@
 {
 	"name": "fenfurnace",
-	"version": "0.4.1",
+	"version": "0.4.2",
 	"description": "A chess engine designed to work entirely from a FEN position.",
 	"keywords": [
 		"chess",
@@ -19,13 +19,14 @@
 		"**/*.js"
 	],
 	"scripts": {
+		"prepublish": "tsc",
 		"test": "tsc && node test",
 		"compile": "tsc && npx webpack --entry ./browser.js -o ./dist"
 	},
 	"dependencies": {},
 	"devDependencies": {
 		"typescript": "~4.3.5",
-		"webpack": "^5.42.0",
+		"webpack": "^5.43.0",
 		"webpack-cli": "^4.7.2"
 	}
 }

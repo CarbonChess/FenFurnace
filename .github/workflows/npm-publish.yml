@@ -1,14 +1,14 @@
 # Runs tests using Node.js and then publishes a package when a release is created
 # More information: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
-name: Node.js Package
+name: Publish package
 
 on:
   release:
     types: [created]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
       - run: npm test
 
   publish-npm:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
