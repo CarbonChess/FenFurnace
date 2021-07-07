@@ -1,16 +1,17 @@
-import { indexToLetter } from '../helpers.js';
-import * as pieces from '../pieces.js';
-import * as validation from './validation.js';
+import { coordsToCell } from '../helpers';
+import * as pieces from '../pieces';
+import * as validation from './validation';
+import { Cell, Colour } from '../types';
 
-export default function isCheck(colour) {
+export default function isCheck(colour: Colour): boolean {
 	// get the king cells
-	let kingCells = { w: '', b: '' };
+	const kingCells: Record<Colour, Cell> = { w: 'E1', b: 'E8' };
 	for (let i = 1; i <= 8; i++) {
 		for (let j = 1; j <= 8; j++) {
-			const testCell = indexToLetter(j) + i;
+			const testCell = coordsToCell(j, i);
 			const testPiece = pieces.getPieceInCell(testCell);
 			if (testPiece.toLowerCase() === 'k') {
-				let kingColour = pieces.getColour(testCell);
+				const kingColour = pieces.getColour(testCell);
 				kingCells[kingColour] = testCell;
 			}
 		}
@@ -19,7 +20,7 @@ export default function isCheck(colour) {
 	for (let i = 1; i <= 8; i++) {
 		for (let j = 1; j <= 8; j++) {
 			// if opposite colour, check its moves
-			const cell = indexToLetter(j) + i;
+			const cell = coordsToCell(j, i);
 			if (!pieces.inCell(cell)) continue;
 
 			const pieceColour = pieces.getColour(cell);

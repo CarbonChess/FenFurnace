@@ -1,10 +1,11 @@
-import gameData from '../variables.js';
-import createFenFromBoardArray from '../board/create-fen.js';
-import isCheck from './is-check.js';
-import * as pieces from '../pieces.js';
-import * as validation from './validation.js';
+import gameData from '../variables';
+import createFenFromBoardArray from '../board/create-fen';
+import isCheck from './is-check';
+import * as pieces from '../pieces';
+import * as validation from './validation';
+import { Column, Row, Cell, PieceID } from '../types';
 
-export default function makeMove(startCell, endCell, { isTest } = {}) {
+export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { isTest?: boolean } = {}) {
 	// isTest=true: test the move instead of making it
 
 	const piece = pieces.getPieceInCell(startCell);
@@ -23,17 +24,17 @@ export default function makeMove(startCell, endCell, { isTest } = {}) {
 		const isKingside = endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0;
 		const side = isKingside ? 'k' : 'q';
 		if (gameData.castling[colour][side]) {
-			const file = isKingside ? 'H' : 'A';
-			const row = colour === 'w' ? '1' : '8';
+			const file: Column = isKingside ? 'H' : 'A';
+			const row: Row = colour === 'w' ? 1 : 8;
 
 			//check if clear squares in between
-			const squares = isKingside ? ['F', 'G'] : ['B', 'C', 'D'];
+			const squares: Column[] = isKingside ? ['F', 'G'] : ['B', 'C', 'D'];
 			for (let i in squares) {
-				if (pieces.inCell(squares[i] + row)) return false;
+				if (pieces.inCell(squares[i] + row as Cell)) return false;
 			}
 
 			pieces.move(startCell, endCell); //move king
-			pieces.move(file + row, (isKingside ? 'F' : 'D') + row); //move rook
+			pieces.move(file + row as Cell, (isKingside ? 'F' : 'D') + row as Cell); //move rook
 
 			//make castling impossible for colour that castled
 			gameData.castling[colour] = { k: false, q: false };
@@ -55,22 +56,22 @@ export default function makeMove(startCell, endCell, { isTest } = {}) {
 			return false;
 		} else {
 			pieces.del(endCell);
-			gameData.promotionPiece = gameData.promotionPiece[colour === 'w' ? 'toUpperCase' : 'toLowerCase']();
+			gameData.promotionPiece = gameData.promotionPiece[colour === 'w' ? 'toUpperCase' : 'toLowerCase']() as PieceID;
 			pieces.add(gameData.promotionPiece, endCell);
 			gameData.promotionPiece = null;
 		}
 	}
 	//enpassant check (take old enpassant pawn && update enpassant square)
 	if (piece.toLowerCase() === 'p' && endCell === gameData.enpassantSquare) {
-		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1)
-		pieces.del(endCell[0] + enpassantNumber);
+		const enpassantNumber = colour === 'w' ? +endCell[1] - 1 : +endCell[1] + 1;
+		pieces.del(endCell[0] + enpassantNumber as Cell);
 		gameData.halfMoveCount = 0;
 		events.pieceCaptured = true;
 	}
 	const deltaLetter = Math.abs(+endCell[1] - +startCell[1]);
 	if (piece.toLowerCase() === 'p' && deltaLetter === 2) {
 		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1);
-		gameData.enpassantSquare = endCell[0] + enpassantNumber;
+		gameData.enpassantSquare = endCell[0] + enpassantNumber as Cell;
 	} else {
 		gameData.enpassantSquare = '-';
 	}

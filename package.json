@@ -1,6 +1,6 @@
 {
 	"name": "fenfurnace",
-	"version": "0.3.1",
+	"version": "0.3.1-next",
 	"description": "A chess engine designed to work entirely from a FEN position.",
 	"keywords": [
 		"chess",
@@ -13,21 +13,19 @@
 	"repository": "git+https://github.com/CarbonChess/FenFurnace.git",
 	"license": "ISC",
 	"author": "CarbonChess",
-	"type": "module",
-	"main": "index.js",
+	"main": "src/index.js",
 	"files": [
-		"**/*.js"
+		"src/**/*.d.ts",
+		"src/**/*.js"
 	],
 	"scripts": {
-		"test": "node test",
-		"compile": "npx webpack --entry ./browser.js -o ./dist"
+		"test": "tsc && node test",
+		"compile": "tsc && npx webpack --entry ./src/browser.js -o ./dist"
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"webpack": "^5.41.1",
+		"typescript": "~4.3.5",
+		"webpack": "^5.42.0",
 		"webpack-cli": "^4.7.2"
-	},
-	"engines": {
-		"node": ">=13"
 	}
 }

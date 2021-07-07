@@ -26,7 +26,7 @@ FenFurnace is available [on npm](https://www.npmjs.org/package/fenfurnace):
   - Check that a given move obeys the rules of chess.
 - `validation.pieceInWay(startCell, endCell)`
   - Check if there are any pieces between two cells.
-- `validation.makeMove(startCell, endCell)`
+- `makeMove(startCell, endCell)`
   - Attempt to move a piece; returns `false` if invalid.
 - `undoMove()`
   - Undoes and returns the last move.
@@ -36,20 +36,22 @@ FenFurnace is available [on npm](https://www.npmjs.org/package/fenfurnace):
   - Checks whether a given colour (`'w'` or `'b'`) is currently in check.
 - `gameEndingStatus(colourId)`
   - Check the game has concluded and the result of the game (`'checkmate'`, `'stalemate'`, or `false`) for a given colour (`'w'` or `'b'`).
+- `points()`
+  - Return an object containing points scores for white (`w`) and black (`b`).
 
 ### Variables
 
 The following values are given in import `gameData`:
 - `castling`: `{ w: { k, q }, b: { k, q } }` (each boolean)
 - `boardArray` (array)
-- `enpassantSquare` (`null` or string)
+- `enpassantSquare` (cell string or `-`)
 - `moveList` (array)
-- `currentTurn` (`null` or string)
-- `halfMoveCount` (int)
-- `moveNumber` (int or string)
-- `promotionPiece` (string)
 - `logList` (array)
+- `currentTurn` (`null` or `w` or `b`)
+- `halfMoveCount` (int)
+- `moveNumber` (int)
+- `promotionPiece` (pieceId string)
 
 ## Build
 
-Build code for browser use using `npm run compile`.
+Bundle local code for browser use with `npm run compile`.

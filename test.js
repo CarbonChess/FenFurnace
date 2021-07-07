@@ -1,10 +1,12 @@
-import gameData from './src/variables.js';
-import setupBoard from './src/board/setup-board.js';
-import createBoard from './src/board/create-board.js';
-import undoMove from './src/board/undo.js';
-import isCheck from './src/validation/is-check.js';
-import findAllMoves from './src/validation/all-moves.js';
-import makeMove from './src/validation/make-move.js';
+const {
+	gameData,
+	setupBoard,
+	createBoard,
+	undoMove,
+	isCheck,
+	findAllMoves,
+	makeMove,
+} = require('./src/index.js');
 
 function test() {
 
@@ -25,7 +27,7 @@ function test() {
 
 	// Castling & log output
 	createBoard('rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/R3K2R w KQkq - 4 3');
-	console.assert(gameData.boardArray[7] === 'R---K--R', 'King has not casled');
+	console.assert(gameData.boardArray[7] === 'R---K--R', 'King has not castled');
 	makeMove('E1', 'C1');
 	console.assert(gameData.boardArray[7] === '--KR---R', 'King has castled');
 	console.assert(!gameData.castling.w.k && gameData.castling.b.q, 'Castling invalid for white');
@@ -45,7 +47,7 @@ function test() {
 	setupBoard();
 	makeMove('E2', 'E4');
 	undoMove();
-	console.assert(gameData.moveNumber == '1', 'Still on first move');
+	console.assert(gameData.moveNumber === 1, 'Still on first move');
 	console.assert(gameData.enpassantSquare !== 'E3', 'Enpassant square reverted');
 
 	// Check king moves
