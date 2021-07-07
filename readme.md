@@ -44,13 +44,13 @@ FenFurnace is available [on npm](https://www.npmjs.org/package/fenfurnace):
 The following values are given in import `gameData`:
 - `castling`: `{ w: { k, q }, b: { k, q } }` (each boolean)
 - `boardArray` (array)
-- `enpassantSquare` (cell string or `-`)
+- `enpassantSquare` (string or `-`)
 - `moveList` (array)
 - `logList` (array)
 - `currentTurn` (`null` or `w` or `b`)
 - `halfMoveCount` (int)
 - `moveNumber` (int)
-- `promotionPiece` (pieceId string)
+- `promotionPiece` (char)
 
 ## Build
 
