@@ -55,3 +55,5 @@ The following values are given in import `gameData`:
 ## Build
 
 Bundle local code for browser use with `npm run compile`.
+
+Functions are available under `window.fenFuncs`.
