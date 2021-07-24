@@ -17,6 +17,7 @@ function test() {
 
 	// Finding moves
 	setupBoard();
+	console.assert(findAllMoves('G1').join(',') === 'F3,A3', 'White knight can move');
 	console.assert(findAllMoves('A2').join(',') === 'A3,A4', 'Two valid pawn moves');
 	console.assert(findAllMoves('A4').length === 0, 'No valid empty moves');
 
