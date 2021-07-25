@@ -62,7 +62,7 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 	switch (piece.toLowerCase()) {
 		case 'p': {
 			if (deltaLetter === 0) {
-				const directionMult = colour == 'w' ? +1 : -1;
+				const directionMult = colour === 'w' ? +1 : -1;
 				const forwardNum = deltaNumber === 2 && !invalidMove ? 2 : 1;
 				invalidMove = pieces.inCell(startCell[0] + (startNumber + 1 * directionMult * forwardNum) as Cell);
 			}
