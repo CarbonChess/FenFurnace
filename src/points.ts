@@ -7,7 +7,8 @@ export default function points(): { w: number, b: number } {
 		for (let cell in row.split('')) {
 			const colour = cell === cell.toUpperCase() ? 'w' : 'b';
 			const piece = cell.toLowerCase();
-			const pointsIncrease = { p: 1, m: 3, b: 3, r: 5, q: 9 }[piece] ?? 0;
+			const pointEquivs: Record<typeof piece, number> = { p: 1, m: 3, b: 3, r: 5, q: 9 };
+			const pointsIncrease = pointEquivs[piece] ?? 0;
 			points[colour] += pointsIncrease;
 		}
 	}
