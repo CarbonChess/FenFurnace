@@ -35,11 +35,11 @@ export default function makeMove(startCell: Cell, endCell: Cell, completeMove: b
 			//check if clear squares in between
 			const squares: Column[] = isKingside ? ['F', 'G'] : ['B', 'C', 'D'];
 			for (let i in squares) {
-				if (pieces.inCell(`${squares[i]}${row}`)) return false;
+				if (pieces.inCell(squares[i] + row as Cell)) return false;
 			}
 
 			pieces.move(startCell, endCell); //move king
-			pieces.move(`${file}${row}`, `${(isKingside ? 'F' : 'D')}${row}`); //move rook
+			pieces.move(file + row as Cell, (isKingside ? 'F' : 'D') + row as Cell); //move rook
 
 			//make castling impossible for colour that castled
 			gameData.castling[colour] = { k: false, q: false };
@@ -69,13 +69,13 @@ export default function makeMove(startCell: Cell, endCell: Cell, completeMove: b
 	//enpassant check (take old enpassant pawn && update enpassant square)
 	const enpassantNumber = endNumber + (colour === 'w' ? -1 : +1) as Row;
 	if (piece.toLowerCase() === 'p' && endCell === gameData.enpassantSquare) {
-		pieces.del(`${endLetter}${enpassantNumber}`);
+		pieces.del(endLetter + enpassantNumber as Cell);
 		gameData.halfMoveCount = 0;
 		events.pieceCaptured = true;
 	}
 	const deltaLetter = Math.abs(endNumber - startNumber);
 	if (piece.toLowerCase() === 'p' && deltaLetter === 2) {
-		gameData.enpassantSquare = `${endLetter}${enpassantNumber}`;
+		gameData.enpassantSquare = endLetter + enpassantNumber as Cell;
 	} else {
 		gameData.enpassantSquare = '-';
 	}

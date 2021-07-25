@@ -11,8 +11,8 @@ export function validateMove(startCell: Cell, endCell: Cell): boolean {
 export function isValid(startCell: Cell, endCell: Cell): boolean {
 	let piece = pieces.getPieceInCell(startCell);
 	let colour: Colour = piece === piece.toUpperCase() ? 'w' : 'b';
-	let startNumber = parseInt(startCell[1]);
-	let endNumber = parseInt(endCell[1]);
+	let startNumber = +startCell[1];
+	let endNumber = +endCell[1];
 	let deltaNumber = Math.abs(endNumber - startNumber);
 	let deltaLetter = Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0));
 	switch (piece.toLowerCase()) {
@@ -21,8 +21,7 @@ export function isValid(startCell: Cell, endCell: Cell): boolean {
 		case 'n':
 			return deltaNumber + deltaLetter === 3 && deltaLetter !== 0 && deltaNumber !== 0;
 		case 'k':
-			const singleMove = deltaLetter <= 1 && deltaNumber <= 1;
-			return (singleMove);
+			return deltaLetter <= 1 && deltaNumber <= 1;
 		case 'b':
 			return deltaLetter === deltaNumber;
 		case 'q':
@@ -44,13 +43,12 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 	let piece = pieces.getPieceInCell(startCell);
 	let colour = pieces.getColour(startCell);
 
-	let startNumber = parseInt(startCell[1]);
-	let endNumber = parseInt(endCell[1]);
+	let startNumber = +startCell[1];
+	let endNumber = +endCell[1];
 	let deltaNumber = Math.abs(endNumber - startNumber);
 	let startLetter = startCell[0];
 	let endLetter = endCell[0];
 	let deltaLetter = Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0));
-
 
 	// determine direction
 	if (endLetter > startLetter) direction.l = 1;
@@ -64,18 +62,9 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 	switch (piece.toLowerCase()) {
 		case 'p': {
 			if (deltaLetter === 0) {
-				if (colour === 'w') {
-					invalidMove = pieces.inCell(startCell[0] + (startNumber + 1) as Cell);
-					if (deltaNumber === 2 && !invalidMove) {
-						invalidMove = pieces.inCell(startCell[0] + (startNumber + 2) as Cell);
-					}
-				}
-				else {
-					invalidMove = pieces.inCell(startCell[0] + (startNumber - 1) as Cell);
-					if (deltaNumber === 2 && !invalidMove) {
-						invalidMove = pieces.inCell(startCell[0] + (startNumber - 2) as Cell);
-					}
-				}
+				const directionMult = colour == 'w' ? +1 : -1;
+				const forwardNum = deltaNumber === 2 && !invalidMove ? 2 : 1;
+				invalidMove = pieces.inCell(startCell[0] + (startNumber + 1 * directionMult * forwardNum) as Cell);
 			}
 			return invalidMove;
 		}
