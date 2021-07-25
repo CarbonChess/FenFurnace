@@ -5,6 +5,3 @@ node_modules/
 dist/
 src/**/*.js
 src/**/*.d.ts
-
-# Lockfile
-package-lock.json
