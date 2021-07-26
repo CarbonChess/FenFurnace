@@ -1,7 +1,7 @@
 import gameData from '../variables';
 import createBoardArray from './create-board';
 
-export default function undoMove(): string | undefined {
+export default function undoMove(): string | void {
 	if (gameData.moveList.length === 0) return;
 	gameData.moveList.pop();
 	gameData.logList.pop();

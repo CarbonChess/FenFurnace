@@ -1,23 +1,34 @@
 import gameData from '../variables';
-import { Cell, Colour } from '../types';
+import { toLowerCase, toUpperCase } from '../helpers';
+import { Cell, Colour, PieceID, CastleString, FenParts } from '../types';
+import { isWhite } from '../pieces';
 
 export default function createBoardArray(fenString: string): void {
-	const fenParts = fenString.split(' ');
-
-	const currentBoard = fenParts[0].split('/');
-	gameData.currentTurn = fenParts[1] as Colour;
+	const { fen, currentTurn, castling, enpassantSquare, halfMoveCount, moveNumber } = getFenParts(fenString);
 
 	gameData.castling = { w: { k: false, q: false }, b: { k: false, q: false } };
-	const castleString = fenParts[2];
+	const castleString = castling;
 	for (let i = 0; i < castleString.length; i++) {
-		const colour = castleString[i] === castleString[i].toUpperCase() ? 'w' : 'b' as Colour;
-		const side = castleString[i].toLowerCase() as ('k' | 'q');
+		const colour = isWhite(castleString[i] as PieceID) ? 'w' : 'b';
+		const side = toLowerCase(<'k' | 'q'>castleString[i]);
 		gameData.castling[colour][side] = true;
 	}
 
-	gameData.enpassantSquare = fenParts[3].toUpperCase() as Cell;
-	gameData.halfMoveCount = +fenParts[4];
-	gameData.moveNumber = +fenParts[5];
+	gameData.currentTurn = currentTurn;
+	gameData.enpassantSquare = enpassantSquare;
+	gameData.halfMoveCount = halfMoveCount;
+	gameData.moveNumber = moveNumber;
 
-	gameData.boardArray = currentBoard.map(val => val.replace(/[0-9]/g, n => '-'.repeat(+n)));
+	gameData.boardArray = fen.split('/').map(val => val.replace(/[0-9]/g, n => '-'.repeat(+n)));
+}
+
+function getFenParts(fenString: string): FenParts {
+	const fenParts = fenString.split(' ');
+	const fen = fenParts[0];
+	const currentTurn = <Colour>fenParts[1];
+	const castling = <CastleString>fenParts[2];
+	const enpassantSquare = toUpperCase(<Cell>fenParts[3]);
+	const halfMoveCount = +fenParts[4];
+	const moveNumber = +fenParts[5];
+	return { fen, currentTurn, castling, enpassantSquare, halfMoveCount, moveNumber };
 }
