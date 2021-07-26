@@ -1,6 +1,6 @@
 import gameData from '../variables';
 import { toLowerCase, toUpperCase } from '../helpers';
-import { Cell, Colour, PieceID, CastleString, FenParts } from '../types';
+import { Cell, Colour, PieceID, FenParts, CastleString, Fen } from '../types';
 import { isWhite } from '../pieces';
 
 export default function createBoardArray(fenString: string): void {
@@ -24,7 +24,7 @@ export default function createBoardArray(fenString: string): void {
 
 function getFenParts(fenString: string): FenParts {
 	const fenParts = fenString.split(' ');
-	const fen = fenParts[0];
+	const fen = <Fen>fenParts[0];
 	const currentTurn = <Colour>fenParts[1];
 	const castling = <CastleString>fenParts[2];
 	const enpassantSquare = toUpperCase(<Cell>fenParts[3]);

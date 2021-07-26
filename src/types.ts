@@ -11,10 +11,12 @@ export type PieceID = 'R' | 'r' | 'B' | 'b' | 'N' | 'n' | 'Q' | 'q' | 'K' | 'k' 
 
 export type EndingStatus = false | 'stalemate' | 'checkmate';
 
+export type Fen = `${string} ${Colour} ${CastleString} ${Lowercase<Cell> | '-'} ${number} ${number}`;
+
 export type CastleString = `${'K' | ''}${'Q' | ''}${'k' | ''}${'q' | ''}`;
 
 export interface FenParts {
-    fen: string;
+    fen: Fen;
     currentTurn: Colour;
     castling: CastleString;
     enpassantSquare: Cell;
