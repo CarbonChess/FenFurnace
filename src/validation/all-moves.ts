@@ -16,7 +16,7 @@ export default function getAllMoves(cell: Cell): Board {
 		for (let j = 1; j <= 8; j++) {
 			const targetCell = coordsToCell(j, i);
 
-			if (makeMove(cell, targetCell, { isTest: true })) {
+			if (makeMove(cell, targetCell, false)) {
 				possibleSquares.push(targetCell);
 			}
 			createBoardArray(beforeState);

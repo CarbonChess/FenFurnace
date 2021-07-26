@@ -11,7 +11,7 @@ export default function isCheck(colour: Colour): boolean {
 			const testCell = coordsToCell(j, i);
 			const testPiece = pieces.getPieceInCell(testCell);
 			if (testPiece.toLowerCase() === 'k') {
-				const kingColour = pieces.getColour(testCell);
+				const kingColour = pieces.getColour(testCell)!;
 				kingCells[kingColour] = testCell;
 			}
 		}

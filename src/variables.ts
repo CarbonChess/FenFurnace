@@ -1,10 +1,10 @@
-import { Colour, Cell, Board, PieceID } from './types';
+import { Colour, Cell, Board, PieceID, Fen } from './types';
 
 export default class GameData {
 	static castling = { w: { k: true, q: true }, b: { k: true, q: true } };
 	static boardArray: Board = [];
 	static enpassantSquare: Cell | '-' = '-';
-	static moveList: string[] = [];
+	static moveList: Fen[] = [];
 	static logList: string[] = [];
 	static currentTurn: Colour = 'w';
 	static halfMoveCount: number = 0;

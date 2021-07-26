@@ -4,24 +4,29 @@ import isCheck from './is-check';
 import * as pieces from '../pieces';
 import * as validation from './validation';
 import { Column, Row, Cell, PieceID } from '../types';
+import { invertColour } from '../helpers';
 
-export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { isTest?: boolean } = {}) {
-	// isTest=true: test the move instead of making it
+export default function makeMove(startCell: Cell, endCell: Cell, completeMove: boolean = true): string | false {
 
 	const piece = pieces.getPieceInCell(startCell);
 	const colour = pieces.getColour(startCell);
+	const startLetter = startCell[0] as Column;
+	const startNumber = +startCell[1] as Row;
+	const endLetter = endCell[0] as Column;
+	const endNumber = +endCell[1] as Row;
 	const beforeState = [...gameData.boardArray];
 	const events = { pieceCaptured: pieces.inCell(endCell), promoted: false, castled: false };
 
 	//must be same colour as move
-	if (colour !== gameData.currentTurn && !isTest) {
-		console.log('Failed to move', startCell, '->', endCell);
+	if (colour !== gameData.currentTurn) {
+		if (!completeMove) console.log('Failed to move', startCell, '->', endCell);
 		return false;
 	}
 
 	//validate castling
-	if (piece.toLowerCase() === 'k' && Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0)) === 2 && (endCell[1] === startCell[1]) && !isCheck(colour)) {
-		const isKingside = endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0;
+	const colDelta = endCell.charCodeAt(0) - startCell.charCodeAt(0);
+	if (piece.toLowerCase() === 'k' && Math.abs(colDelta) === 2 && (endLetter === startLetter) && !isCheck(colour)) {
+		const isKingside = colDelta > 0;
 		const side = isKingside ? 'k' : 'q';
 		if (gameData.castling[colour][side]) {
 			const file: Column = isKingside ? 'H' : 'A';
@@ -48,10 +53,10 @@ export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { i
 	else return false;
 
 	//promotion
-	let isBackRank = endCell[1] === (colour === 'w' ? '8' : '1');
+	const isBackRank = endNumber === (colour === 'w' ? 8 : 1);
 	if (piece.toLowerCase() === 'p' && isBackRank) {
 		if (!gameData.promotionPiece) {
-			console.error('NO PROMOTION PIECE FOUND');
+			console.error('No promotion piece found.');
 			gameData.boardArray = beforeState;
 			return false;
 		} else {
@@ -62,16 +67,15 @@ export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { i
 		}
 	}
 	//enpassant check (take old enpassant pawn && update enpassant square)
+	const enpassantNumber = endNumber + (colour === 'w' ? -1 : +1) as Row;
 	if (piece.toLowerCase() === 'p' && endCell === gameData.enpassantSquare) {
-		const enpassantNumber = colour === 'w' ? +endCell[1] - 1 : +endCell[1] + 1;
-		pieces.del(endCell[0] + enpassantNumber as Cell);
+		pieces.del(endLetter + enpassantNumber as Cell);
 		gameData.halfMoveCount = 0;
 		events.pieceCaptured = true;
 	}
-	const deltaLetter = Math.abs(+endCell[1] - +startCell[1]);
+	const deltaLetter = Math.abs(endNumber - startNumber);
 	if (piece.toLowerCase() === 'p' && deltaLetter === 2) {
-		const enpassantNumber = colour === 'w' ? (+endCell[1] - 1) : (+endCell[1] + 1);
-		gameData.enpassantSquare = endCell[0] + enpassantNumber as Cell;
+		gameData.enpassantSquare = endLetter + enpassantNumber as Cell;
 	} else {
 		gameData.enpassantSquare = '-';
 	}
@@ -86,7 +90,7 @@ export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { i
 	if (piece.toLowerCase() === 'k') {
 		gameData.castling[colour] = { k: false, q: false };
 	} else if (piece.toLowerCase() === 'r') {
-		const isKingside = startCell[0] === 'H';
+		const isKingside = startLetter === 'H';
 		const side = isKingside ? 'k' : 'q';
 		gameData.castling[colour][side] = false;
 	}
@@ -98,12 +102,12 @@ export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { i
 	else gameData.halfMoveCount++;
 
 	//change turn
-	gameData.currentTurn = gameData.currentTurn === 'w' ? 'b' : 'w';
+	gameData.currentTurn = invertColour(gameData.currentTurn);
 
 	//add to log
 	let logText = '';
 	if (events.castled === true) {
-		logText += endCell.charCodeAt(0) - startCell.charCodeAt(0) > 0 ? 'O-O' : 'O-O-O';
+		logText += colDelta > 0 ? 'O-O' : 'O-O-O';
 	} else {
 		if (piece.toLowerCase() === 'p' && events.pieceCaptured) logText += startCell[0].toLowerCase();
 		else if (piece.toLowerCase() !== 'p') logText += piece.toUpperCase();
@@ -111,11 +115,11 @@ export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { i
 		logText += endCell;
 		if (events.promoted) logText += '=' + pieces.getPieceInCell(endCell).toUpperCase();
 	}
-	if (!isTest) gameData.logList.push(logText);
+	if (!completeMove) gameData.logList.push(logText);
 
 	//update fen and move list
-	let fen = createFenFromBoardArray();
-	if (!isTest) gameData.moveList.push(fen);
+	const fen = createFenFromBoardArray();
+	if (!completeMove) gameData.moveList.push(fen);
 
 	return fen;
 }

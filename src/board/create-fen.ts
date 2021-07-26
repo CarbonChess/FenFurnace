@@ -1,6 +1,7 @@
+import { Fen } from '../types';
 import gameData from '../variables';
 
-export default function createFenFromBoardArray(): string {
+export default function createFenFromBoardArray(): Fen {
 	let fenString = '';
 	let blankSquares = 0;
 
@@ -44,5 +45,6 @@ export default function createFenFromBoardArray(): string {
 	fenString += ' ' + gameData.halfMoveCount;
 	//move number
 	fenString += ' ' + gameData.moveNumber;
-	return fenString;
+
+	return fenString as Fen;
 }

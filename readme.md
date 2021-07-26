@@ -26,8 +26,9 @@ FenFurnace is available [on npm](https://www.npmjs.org/package/fenfurnace):
   - Check that a given move obeys the rules of chess.
 - `validation.pieceInWay(startCell, endCell)`
   - Check if there are any pieces between two cells.
-- `makeMove(startCell, endCell)`
+- `makeMove(startCell, endCell, completeMove)`
   - Attempt to move a piece; returns `false` if invalid.
+    If `completeMove` is `false`, no move will actually be made; instead the move will just be tested for validity.
 - `undoMove()`
   - Undoes and returns the last move.
 - `findAllMoves(cell)`
@@ -55,3 +56,5 @@ The following values are given in import `gameData`:
 ## Build
 
 Bundle local code for browser use with `npm run compile`.
+
+Functions are available under `window.fenFuncs`.
