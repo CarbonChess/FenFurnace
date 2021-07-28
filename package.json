@@ -21,12 +21,12 @@
 	"scripts": {
 		"prepublish": "tsc",
 		"test": "tsc && node test",
-		"compile": "tsc && npx webpack --entry ./browser.js -o ./dist"
+		"compile": "tsc && webpack --entry ./browser.js -o ./dist"
 	},
 	"dependencies": {},
 	"devDependencies": {
 		"typescript": "~4.3.5",
-		"webpack": "^5.43.0",
+		"webpack": "^5.47.0",
 		"webpack-cli": "^4.7.2"
 	}
 }
