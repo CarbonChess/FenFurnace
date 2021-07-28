@@ -8,6 +8,10 @@ const {
 	makeMove,
 } = require('./src/index.js');
 
+console.assert = (assertion, message) => {
+	if (!assertion) throw new Error(`Assertion '${message}' failed`);
+}
+
 function test() {
 
 	// Initialising
