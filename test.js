@@ -76,5 +76,5 @@ function test() {
 test();
 
 if (failedTests.length > 0) {
-	throw new Error(`${failedTests.length} tests failed\n` + failedTests.map(msg => `Assertion '${msg}' failed`).join('\n'));
+	throw new Error(`${failedTests.length} tests failed\n` + failedTests.join('\n'));
 }
