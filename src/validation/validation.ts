@@ -41,6 +41,7 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 	let invalidMove = false;
 	const direction: { l?: number, n?: number } = {};
 	let piece = pieces.getPieceInCell(startCell);
+	if (piece === '-') return false;
 	let colour = pieces.getColour(startCell);
 
 	let startNumber = +startCell[1];
@@ -82,6 +83,7 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 					invalidMove = true;
 				if (colour && pieceColour === invertColour(colour) && !hasCollided)
 					hasCollided = true;
+				console.debug
 			}
 			return invalidMove;
 		}

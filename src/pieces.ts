@@ -3,7 +3,7 @@ import { Colour, Cell, PieceID } from './types';
 
 export function getColour(cell: Cell): Colour | undefined {
 	const piece = getPieceInCell(cell);
-	if (!piece) return;
+	if (piece === '-') return;
 	return isWhite(piece) ? 'w' : 'b';
 }
 
