@@ -8,8 +8,9 @@ const {
 	makeMove,
 } = require('./src/index.js');
 
+let failedTests = [];
 console.assert = (assertion, message) => {
-	if (!assertion) throw new Error(`Assertion '${message}' failed`);
+	if (!assertion) failedTests.push(`Assertion '${message}' failed`);
 }
 
 function test() {
@@ -73,3 +74,7 @@ function test() {
 }
 
 test();
+
+if (failedTests.length > 0) {
+	throw new Error(`${failedTests.length} tests failed\n` + failedTests.map(msg => `Assertion '${msg}' failed`).join('\n'));
+}
