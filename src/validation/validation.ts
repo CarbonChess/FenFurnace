@@ -77,6 +77,7 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 				const number = startNumber + direction.n * i;
 				const pieceColour = pieces.getColour(letter + number as Cell);
 
+				if (!pieceColour) continue; // square empty
 				if (pieceColour === colour || hasCollided)
 					invalidMove = true;
 				if (colour && pieceColour === invertColour(colour) && !hasCollided)
