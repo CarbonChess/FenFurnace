@@ -3,10 +3,10 @@ import createFenFromBoardArray from '../board/create-fen';
 import isCheck from './is-check';
 import * as pieces from '../pieces';
 import * as validation from './validation';
-import { Column, Row, Cell, PieceID } from '../types';
-import { invertColour } from '../helpers';
+import { Column, Row, Cell, Fen } from '../types';
+import { invertColour, toLowerCase, toUpperCase } from '../helpers';
 
-export default function makeMove(startCell: Cell, endCell: Cell, completeMove: boolean = true): string | false {
+export default function makeMove(startCell: Cell, endCell: Cell, completeMove: boolean = true): Fen | false {
 
 	const piece = pieces.getPieceInCell(startCell);
 	const colour = pieces.getColour(startCell);
@@ -61,7 +61,7 @@ export default function makeMove(startCell: Cell, endCell: Cell, completeMove: b
 			return false;
 		} else {
 			pieces.del(endCell);
-			gameData.promotionPiece = gameData.promotionPiece[colour === 'w' ? 'toUpperCase' : 'toLowerCase']() as PieceID;
+			gameData.promotionPiece = colour === 'w' ? toUpperCase(gameData.promotionPiece) : toLowerCase(gameData.promotionPiece);
 			pieces.add(gameData.promotionPiece, endCell);
 			gameData.promotionPiece = null;
 		}
@@ -106,7 +106,7 @@ export default function makeMove(startCell: Cell, endCell: Cell, completeMove: b
 
 	//add to log
 	let logText = '';
-	if (events.castled === true) {
+	if (events.castled) {
 		logText += colDelta > 0 ? 'O-O' : 'O-O-O';
 	} else {
 		if (piece.toLowerCase() === 'p' && events.pieceCaptured) logText += startCell[0].toLowerCase();
