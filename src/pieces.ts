@@ -20,10 +20,8 @@ export function inCell(cell: Cell): boolean {
 
 export function move(startCell: Cell, endCell: Cell): boolean {
 	if (!inCell(startCell)) {
-		// console.log('No Piece Found');
 		return false;
 	}
-	// console.log('Moving', startCell, '->', endCell);
 	const originalPiece = getPieceInCell(startCell);
 	add(originalPiece, endCell);
 	del(startCell);
@@ -31,7 +29,6 @@ export function move(startCell: Cell, endCell: Cell): boolean {
 }
 
 export function add(piece: PieceID, cell: Cell): void {
-	// console.log('Adding piece', piece, 'to', cell);
 	const col = parseInt(cell[0], 36) - 9;
 	const row = 8 - (+cell[1]);
 	let str = gameData.boardArray[row];
@@ -39,7 +36,6 @@ export function add(piece: PieceID, cell: Cell): void {
 }
 
 export function del(cell: Cell): void {
-	// console.log('Deleting piece from', cell);
 	const col = parseInt(cell[0], 36) - 9;
 	const row = 8 - (+cell[1]);
 	let str = gameData.boardArray[row];

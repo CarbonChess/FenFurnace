@@ -59,7 +59,7 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 	else direction.n = 0;
 
 	// check cells
-	let invalidMove= false;
+	let invalidMove = false;
 	switch (piece.toLowerCase()) {
 		case 'p': {
 			if (deltaLetter === 0) {

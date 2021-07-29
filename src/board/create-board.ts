@@ -3,6 +3,7 @@ import { toLowerCase, toUpperCase } from '../helpers';
 import { Cell, Colour, PieceID, FenParts, CastleString, Fen } from '../types';
 import { isWhite } from '../pieces';
 
+/** Creates a board from a given Fen. Does not update moves list; use `setupBoard()` instead. */
 export default function createBoardArray(fenString: string): void {
 	const { fen, currentTurn, castling, enpassantSquare, halfMoveCount, moveNumber } = getFenParts(fenString);
 

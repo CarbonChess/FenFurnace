@@ -1,6 +1,7 @@
 import gameData from '../variables';
 import createBoardArray from './create-board';
 
+/** Initialises a brand new board. */
 export default function setupBoard(): void {
 	createBoardArray('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
 	gameData.moveList = [];
