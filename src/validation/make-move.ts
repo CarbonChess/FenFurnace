@@ -10,7 +10,7 @@ export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { i
 
 	const piece = pieces.getPieceInCell(startCell);
 	const colour = pieces.getColour(startCell);
-	if (!colour) return;
+	if (!colour) return false;
 	const beforeState = [...gameData.boardArray];
 	const events = { pieceCaptured: pieces.inCell(endCell), promoted: false, castled: false };
 
