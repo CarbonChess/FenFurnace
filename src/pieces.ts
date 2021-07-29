@@ -2,8 +2,8 @@ import gameData from './variables';
 import { Colour, Cell, PieceID } from './types';
 
 export function getColour(cell: Cell): Colour | undefined {
+	if (!inCell(cell)) return undefined;
 	const piece = getPieceInCell(cell);
-	if (piece === '-') return undefined;
 	return isWhite(piece) ? 'w' : 'b';
 }
 
@@ -19,9 +19,7 @@ export function inCell(cell: Cell): boolean {
 }
 
 export function move(startCell: Cell, endCell: Cell): boolean {
-	if (!inCell(startCell)) {
-		return false;
-	}
+	if (!inCell(startCell)) return false;
 	const originalPiece = getPieceInCell(startCell);
 	add(originalPiece, endCell);
 	del(startCell);
