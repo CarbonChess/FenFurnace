@@ -17,13 +17,18 @@ function test() {
 
 	// Finding moves
 	setupBoard();
+	console.assert(findAllMoves('G1').join(',') === 'F3,H3', 'White knight can move');
 	console.assert(findAllMoves('A2').join(',') === 'A3,A4', 'Two valid pawn moves');
 	console.assert(findAllMoves('A4').length === 0, 'No valid empty moves');
-
-	// Moving
 	createBoard('rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/R3K2R w KQkq - 4 3');
 	console.assert(gameData.boardArray[1] === 'pppp-ppp', 'Pawn moved out of row 2');
 	console.assert(gameData.boardArray[2] === '-----n--', 'Knight in row 3');
+
+	// Moving
+	createBoard('rnb3n1/ppkpppbr/3q1P2/2P1P1pP/7P/2P5/PP6/RNBQKBNR w KQ - 1 15');
+	console.assert(makeMove('D8', 'D5') !== false, 'Queen can move arbitrarily forward');
+	makeMove('G5', 'H4');
+	console.assert(makeMove('C8', 'G5') !== false, 'Bishop can attack');
 
 	// Castling & log output
 	createBoard('rnbqk2r/pppp1ppp/5n2/2b1p3/2B1P3/5N2/PPPP1PPP/R3K2R w KQkq - 4 3');

@@ -10,14 +10,12 @@ export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { i
 
 	const piece = pieces.getPieceInCell(startCell);
 	const colour = pieces.getColour(startCell);
+	if (!colour) return;
 	const beforeState = [...gameData.boardArray];
 	const events = { pieceCaptured: pieces.inCell(endCell), promoted: false, castled: false };
 
 	//must be same colour as move
-	if (colour !== gameData.currentTurn && !isTest) {
-		console.log('Failed to move', startCell, '->', endCell);
-		return false;
-	}
+	if (colour !== gameData.currentTurn && !isTest) return false;
 
 	//validate castling
 	if (piece.toLowerCase() === 'k' && Math.abs(endCell.charCodeAt(0) - startCell.charCodeAt(0)) === 2 && (endCell[1] === startCell[1]) && !isCheck(colour)) {
@@ -51,7 +49,6 @@ export default function makeMove(startCell: Cell, endCell: Cell, { isTest }: { i
 	let isBackRank = endCell[1] === (colour === 'w' ? '8' : '1');
 	if (piece.toLowerCase() === 'p' && isBackRank) {
 		if (!gameData.promotionPiece) {
-			console.error('NO PROMOTION PIECE FOUND');
 			gameData.boardArray = beforeState;
 			return false;
 		} else {

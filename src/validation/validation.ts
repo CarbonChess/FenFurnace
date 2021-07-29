@@ -39,10 +39,10 @@ export function isValid(startCell: Cell, endCell: Cell): boolean {
 }
 
 export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
-	let invalidMove = false;
 	const direction: { l?: number, n?: number } = {};
 	let piece = pieces.getPieceInCell(startCell);
 	let colour = pieces.getColour(startCell);
+	if (!colour) return false;
 
 	let startNumber = parseInt(startCell[1]);
 	let endNumber = parseInt(endCell[1]);
@@ -61,6 +61,7 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 	else direction.n = 0;
 
 	// check cells
+	let invalidMove = false;
 	switch (piece.toLowerCase()) {
 		case 'p': {
 			if (deltaLetter === 0) {
@@ -90,7 +91,7 @@ export function pieceInWay(startCell: Cell, endCell: Cell): boolean {
 
 				if (pieceColour === colour || hasCollided)
 					invalidMove = true;
-				if (colour && pieceColour === invertColour(colour) && !hasCollided)
+				if (pieceColour === invertColour(colour) && !hasCollided)
 					hasCollided = true;
 			}
 			return invalidMove;
