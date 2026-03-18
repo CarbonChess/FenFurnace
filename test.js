@@ -1,3 +1,14 @@
+const fs = require('fs');
+const path = require('path');
+
+const compiledEntry = path.join(__dirname, 'src', 'index.js');
+
+if (!fs.existsSync(compiledEntry)) {
+	throw new Error(
+		'Missing compiled runtime at ./src/index.js. Run `npx tsc` (or `npm test` after installing dependencies) before running test.js.'
+	);
+}
+
 const {
 	gameData,
 	setupBoard,
@@ -6,7 +17,7 @@ const {
 	isCheck,
 	findAllMoves,
 	makeMove,
-} = require('./src/index.js');
+} = require(compiledEntry);
 
 function test() {
 
