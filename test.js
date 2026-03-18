@@ -39,7 +39,7 @@ function test() {
 	// Finding moves
 	setupBoard();
 	got = findAllMoves('G1').join(',');
-	if (got !== 'F3,A3') errors.push(`White knight cannot move (expected: "F3,A3", got: "${got}")`);
+	if (got !== 'F3,H3') errors.push(`White knight cannot move (expected: "F3,H3", got: "${got}")`);
 	got = findAllMoves('A2').join(',');
 	if (got !== 'A3,A4') errors.push(`Pawn moves not found (expected: "A3,A4", got: "${got}")`);
 	got = findAllMoves('A4').length;
